@@ -26,8 +26,9 @@ const LoginPage = () => {
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" placeholder="Password" />
               </Form.Group>
-
-              <Button variant="success btn-block">Login</Button>
+              <Link to="/home">
+                <Button variant="success btn-block">Login</Button>
+              </Link>
               <br />
 
               <Link to="/">
