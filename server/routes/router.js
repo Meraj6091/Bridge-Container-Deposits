@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const signUpTemplate = require("../models/signUpModel");
-
+const importerTemplate = require("../models/importer");
+const { response } = require("express");
 router.post("/signup", (request, response) => {
   const signUpUser = new signUpTemplate({
     firstName: request.body.firstName,
@@ -20,9 +21,8 @@ router.post("/signup", (request, response) => {
 });
 
 router.post("/login", async (request, response) => {
-  console.log(request);
   const findAllSignUpData = await signUpTemplate.find({});
-  console.log(findAllSignUpData);
+
   try {
     if (findAllSignUpData) {
       const isEqual = findAllSignUpData.some(
@@ -38,6 +38,31 @@ router.post("/login", async (request, response) => {
     }
   } catch (err) {
     console.log(err);
+  }
+});
+
+router.post("/importer", (request, response) => {
+  const importer = new importerTemplate({
+    importerName: request.body.importerName,
+    entity: request.body.entity,
+  });
+  importer
+    .save()
+    .then((data) => {
+      return response.json(data);
+    })
+    .catch((err) => {
+      return response.json(err);
+    });
+});
+router.get("/getImporter", async (request, response) => {
+  const importer = await importerTemplate.find({});
+  try {
+    if (importer) {
+      return response.json(importer);
+    }
+  } catch (err) {
+    return response.json(err);
   }
 });
 

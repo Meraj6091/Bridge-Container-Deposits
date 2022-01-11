@@ -25,7 +25,6 @@ const ContainerDeposits = () => {
         <h1 className="shadow-sm text-success mt-5 p-3 text-center rounded">
           Container Deposits
         </h1>
-        <Importer />
 
         <Form onSubmit={handleSubmit}>
           <Row>
