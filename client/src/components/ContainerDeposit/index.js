@@ -37,10 +37,11 @@ const ContainerDeposits = () => {
         <Importer />
 
         <Form onSubmit={handleSubmit}>
-          <Row>
-            <Form.Group as={Col} md="3">
+          <Row className="ml-5">
+            <Form.Group as={Col} md="5">
               <Form.Label>Entity</Form.Label>
               <Select
+                required
                 // options={packageReferences.map((selector) => ({
                 //   label: selector.reference,
                 //   value: selector.reference,
@@ -52,9 +53,10 @@ const ContainerDeposits = () => {
               />
             </Form.Group>
 
-            <Form.Group>
+            <Form.Group as={Col} md="5">
               <Form.Label>Department</Form.Label>
               <Form.Control
+                required
                 type="text"
                 placeholder="Department"
                 id="department"
@@ -62,7 +64,7 @@ const ContainerDeposits = () => {
                 value={containerData.department}
               />
             </Form.Group>
-            <Form.Group>
+            <Form.Group as={Col} md="5">
               <Form.Label>B/L Type</Form.Label>
               <Form.Control
                 type="text"
@@ -72,7 +74,7 @@ const ContainerDeposits = () => {
                 value={containerData.blType}
               />
             </Form.Group>
-            <Form.Group>
+            <Form.Group as={Col} md="5">
               <Form.Label>Bill of Landing Number</Form.Label>
               <Select
                 // options={packageReferences.map((selector) => ({
@@ -85,7 +87,7 @@ const ContainerDeposits = () => {
                 }
               />
             </Form.Group>
-            <Form.Group>
+            <Form.Group as={Col} md="5">
               <Form.Label>Shipment No</Form.Label>
               <Form.Control
                 type="text"
@@ -95,7 +97,7 @@ const ContainerDeposits = () => {
                 value={containerData.shipmentNo}
               />
             </Form.Group>
-            <Form.Group>
+            <Form.Group as={Col} md="5">
               <Form.Label>Po Number</Form.Label>
               <Form.Control
                 type="text"
@@ -105,7 +107,7 @@ const ContainerDeposits = () => {
                 value={containerData.poNo}
               />
             </Form.Group>
-            <Form.Group>
+            <Form.Group as={Col} md="5">
               <Form.Label> Client Po Number</Form.Label>
               <Form.Control
                 type="text"
@@ -115,7 +117,7 @@ const ContainerDeposits = () => {
                 value={containerData.clientPoNo}
               />
             </Form.Group>
-            <Form.Group>
+            <Form.Group as={Col} md="5">
               <Form.Label>Shipment Volume</Form.Label>
               <Form.Control
                 type="text"
@@ -125,7 +127,7 @@ const ContainerDeposits = () => {
                 value={containerData.shipmentVolume}
               />
             </Form.Group>
-            <Form.Group>
+            <Form.Group as={Col} md="5">
               <Form.Label>Carrier</Form.Label>
               <Form.Control
                 type="text"
@@ -135,9 +137,10 @@ const ContainerDeposits = () => {
                 value={containerData.carrier}
               />
             </Form.Group>
-            <Form.Group>
+            <Form.Group as={Col} md="5">
               <Form.Label>Customs house Agent</Form.Label>
               <Form.Control
+                required
                 type="text"
                 placeholder="Customs House Agent"
                 id="customerHouseAgent"
@@ -145,9 +148,10 @@ const ContainerDeposits = () => {
                 value={containerData.customerHouseAgent}
               />
             </Form.Group>
-            <Form.Group>
+            <Form.Group as={Col} md="5">
               <Form.Label>Currency</Form.Label>
               <Form.Control
+                required
                 type="text"
                 placeholder="Currency"
                 id="currency"
@@ -155,9 +159,10 @@ const ContainerDeposits = () => {
                 value={containerData.currency}
               />
             </Form.Group>
-            <Form.Group>
+            <Form.Group as={Col} md="5">
               <Form.Label>Deposited Amount </Form.Label>
               <Form.Control
+                required
                 type="text"
                 placeholder="Deposited Amount"
                 id="depositedAmount"
@@ -166,10 +171,14 @@ const ContainerDeposits = () => {
               />
             </Form.Group>
 
-            <Button variant="success btn-block" type="submit" value="submit">
+            <br />
+          </Row>
+          <br></br>
+          <Col md={1} />
+          <Row as={Col} md="5">
+            <Button variant="success" type="submit" value="submit">
               Add
             </Button>
-            <br />
           </Row>
         </Form>
       </Container>
