@@ -4,6 +4,7 @@ import Chart from "./components/Chart/Chart";
 import Login from "./components/LoginPage";
 import SignUp from "./components/SignUpPage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import ContainerDeposits from "./components/ContainerDeposit";
 
 function App() {
   return (
@@ -14,6 +15,9 @@ function App() {
         </Route>
         <Route path="/login">
           <Login />
+        </Route>
+        <Route path="/containerDeposits">
+          <ContainerDeposits />
         </Route>
       </Switch>
     </Router>
