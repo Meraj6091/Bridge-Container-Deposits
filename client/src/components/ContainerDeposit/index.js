@@ -23,6 +23,7 @@ import {
 import { MdModeEditOutline } from "react-icons/md";
 import { AiFillDelete } from "react-icons/ai";
 import { getDefaultValueForSelect } from "../../Helpers/Select/defaultValue";
+import NavBar from "../NavBar/index";
 const ContainerDeposits = () => {
   const [containerData, setContainerData] = useState({});
   const [loggedIn, setLoggedIn] = useState();
@@ -114,6 +115,8 @@ const ContainerDeposits = () => {
 
   return (
     <>
+      <NavBar />
+
       <Container>
         <h1 className="shadow-sm text-success mt-5 p-3 text-center rounded">
           Container Deposits
