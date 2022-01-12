@@ -90,7 +90,6 @@ function Importer() {
         <h1 className="shadow-sm text-success mt-5 p-3 text-center rounded">
           Importers
         </h1>
-        <br></br>
         <Form onSubmit={(e) => setShow(true, e.preventDefault())}>
           <FormGroup controlId="Importer Name">
             <Col sm={5}>Importer Name</Col>
@@ -104,7 +103,7 @@ function Importer() {
               />
               <Button
                 style={{ marginTop: 14 }}
-                variant="success"
+                variant="success btn-block"
                 type="submit"
                 value="submit"
                 disabled={!importerData.importerName}
@@ -129,7 +128,7 @@ function Importer() {
                   />
                   <Button
                     style={{ marginTop: 14 }}
-                    variant="success"
+                    variant="success btn-block"
                     type="submit"
                     value="submit"
                   >
@@ -138,7 +137,7 @@ function Importer() {
                 </Col>
               </FormGroup>
             </Form>
-            <br></br>
+
             <Table striped bordered hover>
               <thead>
                 <tr>
@@ -184,7 +183,7 @@ function Importer() {
               <Modal show={showModal} onHide={handleClose} centered>
                 <Modal.Header closeButton></Modal.Header>
                 <Modal.Body>
-                  <h4>Are You Sure want to delete this!</h4>
+                  <h4>Are you sure want to Delete This!</h4>
                 </Modal.Body>
                 <Modal.Footer>
                   <Button variant="secondary" onClick={handleClose}>
