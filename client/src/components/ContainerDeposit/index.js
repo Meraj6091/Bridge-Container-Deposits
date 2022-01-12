@@ -272,67 +272,69 @@ const ContainerDeposits = () => {
 
       <Card>
         <Card.Body>
-          <Table responsive striped bordered hover>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Entity</th>
-                <th>Department</th>
-                <th>B/L Type</th>
-                <th>Bill of Landing No</th>
-                <th>Shipment No</th>
-                <th>Po No</th>
-                <th>Client Po No</th>
-                <th>Shipment Volume</th>
-                <th>Carrier</th>
-                <th>Customer House Agent</th>
-                <th>Currency</th>
-                <th>Deposited Amount </th>
-                <th>Action </th>
-              </tr>
-            </thead>
-            <tbody>
-              {tableData.data &&
-                tableData.data.map((data, key) => (
-                  <tr>
-                    <td>{key}</td>
-                    <td>{data.entity}</td>
-                    <td>{data.department}</td>
-                    <td>{data.blType}</td>
-                    <td>{data.billOfLandingNo}</td>
-                    <td>{data.shipmentNo}</td>
-                    <td>{data.poNo}</td>
-                    <td>{data.clientPoNo}</td>
-                    <td>{data.shipmentVol}</td>
-                    <td>{data.carrier}</td>
-                    <td>{data.customerHouseAgent}</td>
-                    <td>{data.currency}</td>
-                    <td>{data.depositedAmount}</td>
-                    <td>
-                      {
-                        <MdModeEditOutline
-                          data-toggle="tooltip"
-                          data-placement="bottom"
-                          title="Edit"
-                          color="blue"
-                          onClick={() => handleOnEdit(data)}
-                        />
-                      }
-                      &nbsp; &nbsp; &nbsp;
-                      {
-                        <AiFillDelete
-                          data-toggle="tooltip"
-                          data-placement="bottom"
-                          title="Delete"
-                          color="red"
-                          onClick={() => setDataByOnDelete(data)}
-                        />
-                      }
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </Table>
+          <Container>
+            <Table responsive striped bordered hover>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Entity</th>
+                  <th>Department</th>
+                  <th>B/L Type</th>
+                  <th>Bill of Landing No</th>
+                  {/* <th>Shipment No</th> */}
+
+                  <th>Client Po No</th>
+                  <th>Shipment Volume</th>
+                  <th>Carrier</th>
+
+                  {/* <th>Currency</th> */}
+                  <th>Deposited Amount </th>
+                  <th>Action </th>
+                </tr>
+              </thead>
+              <tbody>
+                {tableData.data &&
+                  tableData.data.map((data, key) => (
+                    <tr>
+                      <td>{key}</td>
+                      <td>{data.entity}</td>
+                      <td>{data.department}</td>
+                      <td>{data.blType}</td>
+                      <td>{data.billOfLandingNo}</td>
+                      {/* <td>{data.shipmentNo}</td> */}
+
+                      <td>{data.clientPoNo}</td>
+                      <td>{data.shipmentVol}</td>
+                      <td>{data.carrier}</td>
+                      {/* <td>{data.customerHouseAgent}</td> */}
+                      {/* <td>{data.currency}</td> */}
+                      <td>{data.depositedAmount}</td>
+                      <td>
+                        {
+                          <MdModeEditOutline
+                            data-toggle="tooltip"
+                            data-placement="bottom"
+                            title="Edit"
+                            color="blue"
+                            onClick={() => handleOnEdit(data)}
+                          />
+                        }
+                        &nbsp; &nbsp; &nbsp;
+                        {
+                          <AiFillDelete
+                            data-toggle="tooltip"
+                            data-placement="bottom"
+                            title="Delete"
+                            color="red"
+                            onClick={() => setDataByOnDelete(data)}
+                          />
+                        }
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </Table>
+          </Container>
         </Card.Body>
       </Card>
 
