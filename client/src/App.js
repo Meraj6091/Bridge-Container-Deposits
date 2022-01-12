@@ -7,12 +7,12 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import ContainerDeposits from "./components/ContainerDeposit";
 import Entity from "./components/Entity";
 import Importer from "./components/Importer";
-import NavBar from "./components/NavBar";
+// import NavBar from "./components/NavBar";
 
 function App() {
   return (
     <div>
-      <NavBar />
+      {/* <NavBar /> */}
       <Router>
         <Switch>
           <Route path="/" exact={true}>

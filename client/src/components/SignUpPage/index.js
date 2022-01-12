@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, Row, Nav } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import { createAccount } from "./service";
 const SignUp = () => {
@@ -100,8 +100,15 @@ const SignUp = () => {
               </Form.Group>
 
               <Button variant="success btn-block" type="submit" value="submit">
-                Login
+                Submit
               </Button>
+              <br></br>
+              <span style={{ fontSize: 18 }}>
+                If you already have an account
+                <Nav.Link style={{ display: "inline" }} href="/login">
+                  Login
+                </Nav.Link>
+              </span>
             </Form>
           </Col>
         </Row>

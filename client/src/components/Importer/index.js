@@ -11,6 +11,7 @@ import {
   Table,
 } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
+import NavBar from "../NavBar";
 import {
   importer,
   getImporter,
@@ -85,7 +86,8 @@ function Importer() {
   };
 
   return (
-    <div>
+    <>
+      <NavBar />
       <Container>
         <h1 className="shadow-sm text-success mt-5 p-3 text-center rounded">
           Importers
@@ -198,7 +200,7 @@ function Importer() {
           </div>
         )}
       </Container>
-    </div>
+    </>
   );
 }
 
