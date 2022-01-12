@@ -11,13 +11,24 @@ import {
   Table,
 } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
-import { importer, getImporter } from "./service/index";
+import {
+  importer,
+  getImporter,
+  updateImporter,
+  deleteImporter,
+} from "./service/index";
+import { MdModeEditOutline } from "react-icons/md";
+import { AiFillDelete } from "react-icons/ai";
 function Importer() {
   let history = useHistory();
   const [importerData, setImporterData] = useState({});
   const [tableData, setTableData] = useState({});
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [onEdit, setonEdit] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [onDelete, setOnDelete] = useState(false);
+  const handleClose = () => setShowModal(false);
 
   useEffect(() => {
     getData();
@@ -34,11 +45,34 @@ function Importer() {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const { data } = await importer(importerData);
+    if (onEdit) {
+      await updateImporter(importerData);
+    } else {
+      await importer(importerData);
+    }
     setLoading(!loading);
   };
 
-  const handleOnEdit = (data) => {};
+  const handleOnEdit = (data) => {
+    debugger;
+    setImporterData({
+      ...importerData,
+      ...data,
+    });
+    setonEdit(true);
+  };
+  const setDataByOnDelete = (data) => {
+    setImporterData({
+      ...importerData,
+      ...data,
+    });
+    setShowModal(true);
+  };
+  const handleOnDelete = async () => {
+    await deleteImporter(importerData);
+    setShowModal(false);
+    setLoading(!loading);
+  };
   const getData = async () => {
     const { data } = await getImporter(importerData);
     if (data) {
@@ -88,7 +122,7 @@ function Importer() {
                   value={importerData.entity}
                 />
                 <Button style={{ marginTop: 14 }} type="submit" value="submit">
-                  Add
+                  {onEdit ? "Update" : "Submit"}
                 </Button>
               </Col>
             </FormGroup>
@@ -100,6 +134,7 @@ function Importer() {
                 <th>#</th>
                 <th>Importer Name</th>
                 <th>Entity</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -109,10 +144,39 @@ function Importer() {
                     <td>{key}</td>
                     <td>{data.importerName}</td>
                     <td>{data.entity}</td>
+                    <td>
+                      {
+                        <MdModeEditOutline
+                          color="blue"
+                          onClick={() => handleOnEdit(data)}
+                        />
+                      }
+                      &nbsp; &nbsp; &nbsp;
+                      {
+                        <AiFillDelete
+                          color="red"
+                          onClick={() => setDataByOnDelete(data)}
+                        />
+                      }
+                    </td>
                   </tr>
                 ))}
             </tbody>
           </Table>
+          <>
+            <Modal show={showModal} onHide={handleClose}>
+              <Modal.Header closeButton></Modal.Header>
+              <Modal.Body>Are You Sure want to delete this!</Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                  Close
+                </Button>
+                <Button variant="primary" onClick={() => handleOnDelete()}>
+                  Delete
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          </>
         </div>
       )}
     </div>

@@ -65,5 +65,36 @@ router.get("/getImporter", async (request, response) => {
     return response.json(err);
   }
 });
+router.put("/updateImporter", async (request, response) => {
+  console.log(request.body._id);
+  try {
+    const importer = await importerTemplate
+      .updateOne({
+        importerName: request.body.importerName,
+        entity: request.body.entity,
+      })
+      .where({ _id: request.body._id });
+    if (importer) {
+      return response.json(importer);
+    }
+  } catch (e) {
+    response.json(e);
+  }
+});
+
+router.post("/deleteImporter", async (request, response) => {
+  console.log("meraj");
+  console.log(request);
+  try {
+    const importer = await importerTemplate
+      .deleteOne()
+      .where({ _id: request.body._id });
+    if (importer) {
+      return response.json(importer);
+    }
+  } catch (e) {
+    response.json(e);
+  }
+});
 
 module.exports = router;
