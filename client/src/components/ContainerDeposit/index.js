@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
+import {
+  Alert,
+  Button,
+  Col,
+  Container,
+  Form,
+  Row,
+  Navbar,
+  Nav,
+} from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import Importer from "../Importer";
 import Select from "../../Helpers/Select/select";
@@ -25,12 +34,13 @@ const ContainerDeposits = () => {
         <h1 className="shadow-sm text-success mt-5 p-3 text-center rounded">
           Container Deposits
         </h1>
-
+        <br></br>
         <Form onSubmit={handleSubmit}>
-          <Row>
-            <Form.Group as={Col} md="3">
+          <Row className="ml-5">
+            <Form.Group as={Col} md="4">
               <Form.Label>Entity</Form.Label>
               <Select
+                required
                 // options={packageReferences.map((selector) => ({
                 //   label: selector.reference,
                 //   value: selector.reference,
@@ -42,9 +52,10 @@ const ContainerDeposits = () => {
               />
             </Form.Group>
 
-            <Form.Group>
+            <Form.Group as={Col} md="4">
               <Form.Label>Department</Form.Label>
               <Form.Control
+                required
                 type="text"
                 placeholder="Department"
                 id="department"
@@ -52,7 +63,7 @@ const ContainerDeposits = () => {
                 value={containerData.department}
               />
             </Form.Group>
-            <Form.Group>
+            <Form.Group as={Col} md="4">
               <Form.Label>B/L Type</Form.Label>
               <Form.Control
                 type="text"
@@ -62,7 +73,7 @@ const ContainerDeposits = () => {
                 value={containerData.blType}
               />
             </Form.Group>
-            <Form.Group>
+            <Form.Group as={Col} md="4">
               <Form.Label>Bill of Landing Number</Form.Label>
               <Select
                 // options={packageReferences.map((selector) => ({
@@ -75,7 +86,7 @@ const ContainerDeposits = () => {
                 }
               />
             </Form.Group>
-            <Form.Group>
+            <Form.Group as={Col} md="4">
               <Form.Label>Shipment No</Form.Label>
               <Form.Control
                 type="text"
@@ -85,7 +96,7 @@ const ContainerDeposits = () => {
                 value={containerData.shipmentNo}
               />
             </Form.Group>
-            <Form.Group>
+            <Form.Group as={Col} md="4">
               <Form.Label>Po Number</Form.Label>
               <Form.Control
                 type="text"
@@ -95,7 +106,7 @@ const ContainerDeposits = () => {
                 value={containerData.poNo}
               />
             </Form.Group>
-            <Form.Group>
+            <Form.Group as={Col} md="4">
               <Form.Label> Client Po Number</Form.Label>
               <Form.Control
                 type="text"
@@ -105,7 +116,7 @@ const ContainerDeposits = () => {
                 value={containerData.clientPoNo}
               />
             </Form.Group>
-            <Form.Group>
+            <Form.Group as={Col} md="4">
               <Form.Label>Shipment Volume</Form.Label>
               <Form.Control
                 type="text"
@@ -115,7 +126,7 @@ const ContainerDeposits = () => {
                 value={containerData.shipmentVolume}
               />
             </Form.Group>
-            <Form.Group>
+            <Form.Group as={Col} md="4">
               <Form.Label>Carrier</Form.Label>
               <Form.Control
                 type="text"
@@ -125,9 +136,10 @@ const ContainerDeposits = () => {
                 value={containerData.carrier}
               />
             </Form.Group>
-            <Form.Group>
+            <Form.Group as={Col} md="4">
               <Form.Label>Customs house Agent</Form.Label>
               <Form.Control
+                required
                 type="text"
                 placeholder="Customs House Agent"
                 id="customerHouseAgent"
@@ -135,9 +147,10 @@ const ContainerDeposits = () => {
                 value={containerData.customerHouseAgent}
               />
             </Form.Group>
-            <Form.Group>
+            <Form.Group as={Col} md="4">
               <Form.Label>Currency</Form.Label>
               <Form.Control
+                required
                 type="text"
                 placeholder="Currency"
                 id="currency"
@@ -145,9 +158,10 @@ const ContainerDeposits = () => {
                 value={containerData.currency}
               />
             </Form.Group>
-            <Form.Group>
+            <Form.Group as={Col} md="4">
               <Form.Label>Deposited Amount </Form.Label>
               <Form.Control
+                required
                 type="text"
                 placeholder="Deposited Amount"
                 id="depositedAmount"
@@ -156,10 +170,15 @@ const ContainerDeposits = () => {
               />
             </Form.Group>
 
-            <Button variant="success btn-block" type="submit" value="submit">
+            <br />
+          </Row>
+          <br></br>
+          {/* <Col md={1} /> */}
+
+          <Row as={Col} md="6" style={{ left: 60 }}>
+            <Button variant="success" type="submit" value="submit">
               Add
             </Button>
-            <br />
           </Row>
         </Form>
       </Container>
