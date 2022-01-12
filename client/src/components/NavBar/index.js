@@ -13,6 +13,7 @@ import {
 import { Link, useHistory } from "react-router-dom";
 import Importer from "../Importer";
 import Select from "../../Helpers/Select/select";
+import { BiLogOut } from "react-icons/bi";
 const NavBar = () => {
   return (
     <>
@@ -23,10 +24,9 @@ const NavBar = () => {
             {/* <Nav.Link href="#home">Home</Nav.Link> */}
             <Nav.Link href="/containerDeposits">Container Deposits</Nav.Link>
             <Nav.Link href="/importer">Importer</Nav.Link>
-            <Nav.Link href="/login">
-              <button type="button" class="btn btn-warning">
-                Logout
-              </button>
+            <Nav.Link href="/login" style={{ paddingLeft: 80 }}>
+              Logout &nbsp;
+              <BiLogOut />
             </Nav.Link>
           </Nav>
         </Container>

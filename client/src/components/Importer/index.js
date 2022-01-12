@@ -187,10 +187,10 @@ function Importer() {
                 </Modal.Body>
                 <Modal.Footer>
                   <Button variant="secondary" onClick={handleClose}>
-                    Close
+                    No
                   </Button>
                   <Button variant="primary" onClick={() => handleOnDelete()}>
-                    Delete
+                    Yes
                   </Button>
                 </Modal.Footer>
               </Modal>
