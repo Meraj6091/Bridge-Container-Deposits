@@ -257,61 +257,62 @@ const ContainerDeposits = () => {
         </Form>
       </Container>
       <br></br>
-
-      <Table striped bordered hover size="sm">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Entity</th>
-            <th>Department</th>
-            <th>B/L Type</th>
-            <th>Bill of Landing No</th>
-            <th>Shipment No</th>
-            <th>Po No</th>
-            <th>Client Po No</th>
-            <th>Shipment Volume</th>
-            <th>Carrier</th>
-            <th>Customer House Agent</th>
-            <th>Currency</th>
-            <th>Deposited Amount </th>
-          </tr>
-        </thead>
-        <tbody>
-          {tableData.data &&
-            tableData.data.map((data, key) => (
-              <tr>
-                <td>{key}</td>
-                <td>{data.entity}</td>
-                <td>{data.department}</td>
-                <td>{data.blType}</td>
-                <td>{data.billOfLandingNo}</td>
-                <td>{data.shipmentNo}</td>
-                <td>{data.poNo}</td>
-                <td>{data.clientPoNo}</td>
-                <td>{data.shipmentVol}</td>
-                <td>{data.carrier}</td>
-                <td>{data.customerHouseAgent}</td>
-                <td>{data.currency}</td>
-                <td>{data.depositedAmount}</td>
-                <td>
-                  {
-                    <MdModeEditOutline
-                      color="blue"
-                      onClick={() => handleOnEdit(data)}
-                    />
-                  }
-                  &nbsp; &nbsp; &nbsp;
-                  {
-                    <AiFillDelete
-                      color="red"
-                      onClick={() => setDataByOnDelete(data)}
-                    />
-                  }
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </Table>
+      <Container>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Entity</th>
+              <th>Department</th>
+              <th>B/L Type</th>
+              <th>Bill of Landing No</th>
+              <th>Shipment No</th>
+              <th>Po No</th>
+              <th>Client Po No</th>
+              <th>Shipment Volume</th>
+              <th>Carrier</th>
+              <th>Customer House Agent</th>
+              <th>Currency</th>
+              <th>Deposited Amount </th>
+            </tr>
+          </thead>
+          <tbody>
+            {tableData.data &&
+              tableData.data.map((data, key) => (
+                <tr>
+                  <td>{key}</td>
+                  <td>{data.entity}</td>
+                  <td>{data.department}</td>
+                  <td>{data.blType}</td>
+                  <td>{data.billOfLandingNo}</td>
+                  <td>{data.shipmentNo}</td>
+                  <td>{data.poNo}</td>
+                  <td>{data.clientPoNo}</td>
+                  <td>{data.shipmentVol}</td>
+                  <td>{data.carrier}</td>
+                  <td>{data.customerHouseAgent}</td>
+                  <td>{data.currency}</td>
+                  <td>{data.depositedAmount}</td>
+                  <td>
+                    {
+                      <MdModeEditOutline
+                        color="blue"
+                        onClick={() => handleOnEdit(data)}
+                      />
+                    }
+                    &nbsp; &nbsp; &nbsp;
+                    {
+                      <AiFillDelete
+                        color="red"
+                        onClick={() => setDataByOnDelete(data)}
+                      />
+                    }
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </Table>
+      </Container>
       <>
         <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton></Modal.Header>
