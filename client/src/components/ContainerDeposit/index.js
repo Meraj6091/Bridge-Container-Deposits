@@ -24,6 +24,8 @@ import { MdModeEditOutline } from "react-icons/md";
 import { AiFillDelete } from "react-icons/ai";
 import { getDefaultValueForSelect } from "../../Helpers/Select/defaultValue";
 import NavBar from "../NavBar/index";
+import { currencyCodes } from "../../Helpers/currency";
+
 const ContainerDeposits = () => {
   const [containerData, setContainerData] = useState({});
   const [loggedIn, setLoggedIn] = useState();
@@ -48,10 +50,11 @@ const ContainerDeposits = () => {
   }, [containerData]);
   const handleClose = () => setShowModal(false);
 
-  const handleSelectChange = (event) => {
+  const handleSelectChange = (event, id) => {
+    debugger;
     setContainerData({
       ...containerData,
-      entity: event.value,
+      [id]: event.value,
     });
   };
   const handleChange = (event) => {
@@ -124,7 +127,7 @@ const ContainerDeposits = () => {
         <br></br>
         <Form onSubmit={handleSubmit}>
           <Row>
-            <Form.Group as={Col} md="4" controlId="entity">
+            <Form.Group as={Col} md="4">
               <Form.Label>Entity</Form.Label>
               <Select
                 value={getDefaultValueForSelect(containerData.entity)}
@@ -132,7 +135,7 @@ const ContainerDeposits = () => {
                   label: selector.entity,
                   value: selector.entity,
                 }))}
-                onChange={(event) => handleSelectChange(event)}
+                onChange={(event) => handleSelectChange(event, "entity")}
               />
             </Form.Group>
 
@@ -230,13 +233,13 @@ const ContainerDeposits = () => {
             </Form.Group>
             <Form.Group as={Col} md="4">
               <Form.Label>Currency</Form.Label>
-              <Form.Control
-                required
-                type="text"
-                placeholder="Currency"
-                id="currency"
-                onChange={handleChange}
-                value={containerData.currency}
+              <Select
+                value={getDefaultValueForSelect(containerData.currency)}
+                options={currencyCodes.map((selector) => ({
+                  label: selector,
+                  value: selector,
+                }))}
+                onChange={(event) => handleSelectChange(event, "currency")}
               />
             </Form.Group>
             <Form.Group as={Col} md="4">
@@ -317,15 +320,17 @@ const ContainerDeposits = () => {
         </Table>
       </Container>
       <>
-        <Modal show={showModal} onHide={handleClose}>
+        <Modal show={showModal} onHide={handleClose} centered>
           <Modal.Header closeButton></Modal.Header>
-          <Modal.Body>Are you sure want to Delete This!</Modal.Body>
+          <Modal.Body>
+            <h6>Are you sure want to Delete This!</h6>
+          </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
-              Close
+              No
             </Button>
             <Button variant="primary" onClick={() => handleOnDelete()}>
-              Delete
+              Yes
             </Button>
           </Modal.Footer>
         </Modal>
