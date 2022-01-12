@@ -9,6 +9,7 @@ import {
   Navbar,
   Nav,
 } from "react-bootstrap";
+import logo from "../../images/logo.png";
 
 import { Link, useHistory } from "react-router-dom";
 import Importer from "../Importer";
@@ -19,7 +20,9 @@ const NavBar = () => {
     <>
       <Navbar fixed="top" bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href="">BRIDGE</Navbar.Brand>
+          <Navbar.Brand href="">
+            <img src={logo} height={50} width={100} alt="Logo" />
+          </Navbar.Brand>
           <Nav className="me-auto">
             {/* <Nav.Link href="#home">Home</Nav.Link> */}
             <Nav.Link href="/containerDeposits">Container Deposits</Nav.Link>

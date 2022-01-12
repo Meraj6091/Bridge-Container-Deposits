@@ -8,6 +8,7 @@ import {
   FormGroup,
   Row,
   Modal,
+  Card,
   Table,
 } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
@@ -139,48 +140,51 @@ function Importer() {
                 </Col>
               </FormGroup>
             </Form>
-
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Importer Name</th>
-                  <th>Entity</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {tableData.data &&
-                  tableData.data.map((data, key) => (
+            <Card>
+              <Card.Body>
+                <Table striped bordered hover>
+                  <thead>
                     <tr>
-                      <td>{key}</td>
-                      <td>{data.importerName}</td>
-                      <td>{data.entity}</td>
-                      <td>
-                        {
-                          <MdModeEditOutline
-                            data-toggle="tooltip"
-                            data-placement="bottom"
-                            title="Edit"
-                            color="blue"
-                            onClick={() => handleOnEdit(data)}
-                          />
-                        }
-                        &nbsp; &nbsp; &nbsp;
-                        {
-                          <AiFillDelete
-                            data-toggle="tooltip"
-                            data-placement="bottom"
-                            title="Delete"
-                            color="red"
-                            onClick={() => setDataByOnDelete(data)}
-                          />
-                        }
-                      </td>
+                      <th>#</th>
+                      <th>Importer Name</th>
+                      <th>Entity</th>
+                      <th>Action</th>
                     </tr>
-                  ))}
-              </tbody>
-            </Table>
+                  </thead>
+                  <tbody>
+                    {tableData.data &&
+                      tableData.data.map((data, key) => (
+                        <tr>
+                          <td>{key}</td>
+                          <td>{data.importerName}</td>
+                          <td>{data.entity}</td>
+                          <td>
+                            {
+                              <MdModeEditOutline
+                                data-toggle="tooltip"
+                                data-placement="bottom"
+                                title="Edit"
+                                color="blue"
+                                onClick={() => handleOnEdit(data)}
+                              />
+                            }
+                            &nbsp; &nbsp; &nbsp;
+                            {
+                              <AiFillDelete
+                                data-toggle="tooltip"
+                                data-placement="bottom"
+                                title="Delete"
+                                color="red"
+                                onClick={() => setDataByOnDelete(data)}
+                              />
+                            }
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </Table>
+              </Card.Body>
+            </Card>
             <>
               <Modal show={showModal} onHide={handleClose} centered>
                 <Modal.Header closeButton></Modal.Header>
