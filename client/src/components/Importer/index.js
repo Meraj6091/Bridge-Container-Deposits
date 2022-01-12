@@ -138,8 +138,8 @@ function Importer() {
                 </Col>
               </FormGroup>
             </Form>
-
-            <Table striped bordered hover size="sm">
+            <br></br>
+            <Table striped bordered hover>
               <thead>
                 <tr>
                   <th>#</th>
@@ -158,6 +158,9 @@ function Importer() {
                       <td>
                         {
                           <MdModeEditOutline
+                            data-toggle="tooltip"
+                            data-placement="bottom"
+                            title="Edit"
                             color="blue"
                             onClick={() => handleOnEdit(data)}
                           />
@@ -165,6 +168,9 @@ function Importer() {
                         &nbsp; &nbsp; &nbsp;
                         {
                           <AiFillDelete
+                            data-toggle="tooltip"
+                            data-placement="bottom"
+                            title="Delete"
                             color="red"
                             onClick={() => setDataByOnDelete(data)}
                           />
@@ -175,9 +181,11 @@ function Importer() {
               </tbody>
             </Table>
             <>
-              <Modal show={showModal} onHide={handleClose}>
+              <Modal show={showModal} onHide={handleClose} centered>
                 <Modal.Header closeButton></Modal.Header>
-                <Modal.Body>Are You Sure want to delete this!</Modal.Body>
+                <Modal.Body>
+                  <h4>Are You Sure want to delete this!</h4>
+                </Modal.Body>
                 <Modal.Footer>
                   <Button variant="secondary" onClick={handleClose}>
                     Close
