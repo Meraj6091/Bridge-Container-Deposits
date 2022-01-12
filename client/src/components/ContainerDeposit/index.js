@@ -9,6 +9,7 @@ import {
   Row,
   Modal,
   Table,
+  Card,
 } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import Importer from "../Importer";
@@ -122,200 +123,219 @@ const ContainerDeposits = () => {
           Container Deposits
         </h1>
         <br></br>
-        <Form onSubmit={handleSubmit}>
-          <Row>
-            <Form.Group as={Col} md="4" controlId="entity">
-              <Form.Label>Entity</Form.Label>
-              <Select
-                value={getDefaultValueForSelect(containerData.entity)}
-                options={containerData.data?.map((selector) => ({
-                  label: selector.entity,
-                  value: selector.entity,
-                }))}
-                onChange={(event) => handleSelectChange(event)}
-              />
-            </Form.Group>
+        <Card>
+          <Card.Body>
+            <Form onSubmit={handleSubmit}>
+              <Row>
+                <Form.Group as={Col} md="4" controlId="entity">
+                  <Form.Label>Entity</Form.Label>
+                  <Select
+                    value={getDefaultValueForSelect(containerData.entity)}
+                    options={containerData.data?.map((selector) => ({
+                      label: selector.entity,
+                      value: selector.entity,
+                    }))}
+                    onChange={(event) => handleSelectChange(event)}
+                  />
+                </Form.Group>
 
-            <Form.Group as={Col} md="4">
-              <Form.Label>Department</Form.Label>
-              <Form.Control
-                required
-                type="text"
-                placeholder="Department"
-                id="department"
-                onChange={handleChange}
-                value={containerData.department}
-              />
-            </Form.Group>
-            <Form.Group as={Col} md="4">
-              <Form.Label>B/L Type</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="blType"
-                id="blType"
-                onChange={handleChange}
-                value={containerData.blType}
-              />
-            </Form.Group>
-            <Form.Group as={Col} md="4">
-              <Form.Label>Bill of Landing Number</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Bill of Landing Number"
-                id="billOfLandingNo"
-                onChange={handleChange}
-                value={containerData.billOfLandingNo}
-              />
-            </Form.Group>
-            <Form.Group as={Col} md="4">
-              <Form.Label>Shipment No</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Shipment No"
-                id="shipmentNo"
-                onChange={handleChange}
-                value={containerData.shipmentNo}
-              />
-            </Form.Group>
-            <Form.Group as={Col} md="4">
-              <Form.Label>Po Number</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Po Number"
-                id="poNo"
-                onChange={handleChange}
-                value={containerData.poNo}
-              />
-            </Form.Group>
-            <Form.Group as={Col} md="4">
-              <Form.Label> Client Po Number</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Po Number"
-                id="clientPoNo"
-                onChange={handleChange}
-                value={containerData.clientPoNo}
-              />
-            </Form.Group>
-            <Form.Group as={Col} md="4">
-              <Form.Label>Shipment Volume</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Shipment Volume"
-                id="shipmentVol"
-                onChange={handleChange}
-                value={containerData.shipmentVol}
-              />
-            </Form.Group>
-            <Form.Group as={Col} md="4">
-              <Form.Label>Carrier</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Carrier"
-                id="carrier"
-                onChange={handleChange}
-                value={containerData.carrier}
-              />
-            </Form.Group>
-            <Form.Group as={Col} md="4">
-              <Form.Label>Customs house Agent</Form.Label>
-              <Form.Control
-                required
-                type="text"
-                placeholder="Customs House Agent"
-                id="customerHouseAgent"
-                onChange={handleChange}
-                value={containerData.customerHouseAgent}
-              />
-            </Form.Group>
-            <Form.Group as={Col} md="4">
-              <Form.Label>Currency</Form.Label>
-              <Form.Control
-                required
-                type="text"
-                placeholder="Currency"
-                id="currency"
-                onChange={handleChange}
-                value={containerData.currency}
-              />
-            </Form.Group>
-            <Form.Group as={Col} md="4">
-              <Form.Label>Deposited Amount </Form.Label>
-              <Form.Control
-                required
-                type="text"
-                placeholder="Deposited Amount"
-                id="depositedAmount"
-                onChange={handleChange}
-                value={containerData.depositedAmount}
-              />
-            </Form.Group>
-            <br></br>
-            <Row as={Col} md="6" style={{ left: 10 }}>
-              <Button variant="success btn-block" type="submit" value="submit">
-                {onEdit ? "Update" : "Submit"}
-              </Button>
-            </Row>
-          </Row>
-        </Form>
+                <Form.Group as={Col} md="4">
+                  <Form.Label>Department</Form.Label>
+                  <Form.Control
+                    required
+                    type="text"
+                    placeholder="Department"
+                    id="department"
+                    onChange={handleChange}
+                    value={containerData.department}
+                  />
+                </Form.Group>
+                <Form.Group as={Col} md="4">
+                  <Form.Label>B/L Type</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="blType"
+                    id="blType"
+                    onChange={handleChange}
+                    value={containerData.blType}
+                  />
+                </Form.Group>
+                <Form.Group as={Col} md="4">
+                  <Form.Label>Bill of Landing Number</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Bill of Landing Number"
+                    id="billOfLandingNo"
+                    onChange={handleChange}
+                    value={containerData.billOfLandingNo}
+                  />
+                </Form.Group>
+                <Form.Group as={Col} md="4">
+                  <Form.Label>Shipment No</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Shipment No"
+                    id="shipmentNo"
+                    onChange={handleChange}
+                    value={containerData.shipmentNo}
+                  />
+                </Form.Group>
+                <Form.Group as={Col} md="4">
+                  <Form.Label>Po Number</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Po Number"
+                    id="poNo"
+                    onChange={handleChange}
+                    value={containerData.poNo}
+                  />
+                </Form.Group>
+                <Form.Group as={Col} md="4">
+                  <Form.Label> Client Po Number</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Po Number"
+                    id="clientPoNo"
+                    onChange={handleChange}
+                    value={containerData.clientPoNo}
+                  />
+                </Form.Group>
+                <Form.Group as={Col} md="4">
+                  <Form.Label>Shipment Volume</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Shipment Volume"
+                    id="shipmentVol"
+                    onChange={handleChange}
+                    value={containerData.shipmentVol}
+                  />
+                </Form.Group>
+                <Form.Group as={Col} md="4">
+                  <Form.Label>Carrier</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Carrier"
+                    id="carrier"
+                    onChange={handleChange}
+                    value={containerData.carrier}
+                  />
+                </Form.Group>
+                <Form.Group as={Col} md="4">
+                  <Form.Label>Customs house Agent</Form.Label>
+                  <Form.Control
+                    required
+                    type="text"
+                    placeholder="Customs House Agent"
+                    id="customerHouseAgent"
+                    onChange={handleChange}
+                    value={containerData.customerHouseAgent}
+                  />
+                </Form.Group>
+                <Form.Group as={Col} md="4">
+                  <Form.Label>Currency</Form.Label>
+                  <Form.Control
+                    required
+                    type="text"
+                    placeholder="Currency"
+                    id="currency"
+                    onChange={handleChange}
+                    value={containerData.currency}
+                  />
+                </Form.Group>
+                <Form.Group as={Col} md="4">
+                  <Form.Label>Deposited Amount </Form.Label>
+                  <Form.Control
+                    required
+                    type="text"
+                    placeholder="Deposited Amount"
+                    id="depositedAmount"
+                    onChange={handleChange}
+                    value={containerData.depositedAmount}
+                  />
+                </Form.Group>
+                <br></br>
+                <Row as={Col} md="6" style={{ left: 10 }}>
+                  <Button
+                    variant="success btn-block"
+                    type="submit"
+                    value="submit"
+                  >
+                    {onEdit ? "Update" : "Submit"}
+                  </Button>
+                </Row>
+              </Row>
+            </Form>
+          </Card.Body>
+        </Card>
       </Container>
       <br></br>
-      <Container>
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Entity</th>
-              <th>Department</th>
-              <th>B/L Type</th>
-              <th>Bill of Landing No</th>
-              <th>Shipment No</th>
-              <th>Po No</th>
-              <th>Client Po No</th>
-              <th>Shipment Volume</th>
-              <th>Carrier</th>
-              <th>Customer House Agent</th>
-              <th>Currency</th>
-              <th>Deposited Amount </th>
-            </tr>
-          </thead>
-          <tbody>
-            {tableData.data &&
-              tableData.data.map((data, key) => (
-                <tr>
-                  <td>{key}</td>
-                  <td>{data.entity}</td>
-                  <td>{data.department}</td>
-                  <td>{data.blType}</td>
-                  <td>{data.billOfLandingNo}</td>
-                  <td>{data.shipmentNo}</td>
-                  <td>{data.poNo}</td>
-                  <td>{data.clientPoNo}</td>
-                  <td>{data.shipmentVol}</td>
-                  <td>{data.carrier}</td>
-                  <td>{data.customerHouseAgent}</td>
-                  <td>{data.currency}</td>
-                  <td>{data.depositedAmount}</td>
-                  <td>
-                    {
-                      <MdModeEditOutline
-                        color="blue"
-                        onClick={() => handleOnEdit(data)}
-                      />
-                    }
-                    &nbsp; &nbsp; &nbsp;
-                    {
-                      <AiFillDelete
-                        color="red"
-                        onClick={() => setDataByOnDelete(data)}
-                      />
-                    }
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </Table>
-      </Container>
+
+      <Card>
+        <Card.Body>
+          <Table responsive striped bordered hover>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Entity</th>
+                <th>Department</th>
+                <th>B/L Type</th>
+                <th>Bill of Landing No</th>
+                <th>Shipment No</th>
+                <th>Po No</th>
+                <th>Client Po No</th>
+                <th>Shipment Volume</th>
+                <th>Carrier</th>
+                <th>Customer House Agent</th>
+                <th>Currency</th>
+                <th>Deposited Amount </th>
+                <th>Action </th>
+              </tr>
+            </thead>
+            <tbody>
+              {tableData.data &&
+                tableData.data.map((data, key) => (
+                  <tr>
+                    <td>{key}</td>
+                    <td>{data.entity}</td>
+                    <td>{data.department}</td>
+                    <td>{data.blType}</td>
+                    <td>{data.billOfLandingNo}</td>
+                    <td>{data.shipmentNo}</td>
+                    <td>{data.poNo}</td>
+                    <td>{data.clientPoNo}</td>
+                    <td>{data.shipmentVol}</td>
+                    <td>{data.carrier}</td>
+                    <td>{data.customerHouseAgent}</td>
+                    <td>{data.currency}</td>
+                    <td>{data.depositedAmount}</td>
+                    <td>
+                      {
+                        <MdModeEditOutline
+                          data-toggle="tooltip"
+                          data-placement="bottom"
+                          title="Edit"
+                          color="blue"
+                          onClick={() => handleOnEdit(data)}
+                        />
+                      }
+                      &nbsp; &nbsp; &nbsp;
+                      {
+                        <AiFillDelete
+                          data-toggle="tooltip"
+                          data-placement="bottom"
+                          title="Delete"
+                          color="red"
+                          onClick={() => setDataByOnDelete(data)}
+                        />
+                      }
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </Table>
+        </Card.Body>
+      </Card>
+
       <>
         <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton></Modal.Header>
