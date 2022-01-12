@@ -166,7 +166,7 @@ function Importer() {
           <>
             <Modal show={showModal} onHide={handleClose}>
               <Modal.Header closeButton></Modal.Header>
-              <Modal.Body>Are You Sure want to delete this!</Modal.Body>
+              <Modal.Body>Are you sure want to Delete This!</Modal.Body>
               <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                   Close
