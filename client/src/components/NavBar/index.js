@@ -24,7 +24,12 @@ const NavBar = () => {
 
   return (
     <>
-      <Navbar fixed="top" bg="dark" variant="dark">
+      <Navbar
+        style={{ font: "#000000", backgroundColor: "#bfb9b7" }}
+        fixed="top"
+        bg="light"
+        variant="light"
+      >
         <Container>
           <Navbar.Brand href="">
             <img src={logo} height={50} width={100} alt="Logo" />
@@ -34,12 +39,7 @@ const NavBar = () => {
             <Nav.Link href="/containerDeposits">Container Deposits</Nav.Link>
             <Nav.Link href="/importer">Importer</Nav.Link>
             &nbsp; &nbsp;
-            {user && (
-              <Nav.Link href="/signup">
-                &nbsp; Create User &nbsp;
-                <FaUser style={{ marginTop: -3 }} />
-              </Nav.Link>
-            )}
+            {user && <Nav.Link href="/signup"> Create User &nbsp;</Nav.Link>}
             <Nav.Link href="/" style={{ paddingLeft: 80 }}>
               Logout &nbsp;
               <BiLogOut />
