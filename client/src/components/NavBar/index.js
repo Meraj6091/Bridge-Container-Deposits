@@ -15,6 +15,8 @@ import { Link, useHistory } from "react-router-dom";
 import Importer from "../Importer";
 import Select from "../../Helpers/Select/select";
 import { BiLogOut } from "react-icons/bi";
+import { FaUser } from "react-icons/fa";
+
 import { getUsers } from "./service/index";
 import { useStateValue } from "../../Helpers/Provider";
 const NavBar = () => {
@@ -31,7 +33,13 @@ const NavBar = () => {
             {/* <Nav.Link href="#home">Home</Nav.Link> */}
             <Nav.Link href="/containerDeposits">Container Deposits</Nav.Link>
             <Nav.Link href="/importer">Importer</Nav.Link>
-            {user && <Nav.Link href="/signup">Create User &nbsp;</Nav.Link>}
+            &nbsp; &nbsp;
+            {user && (
+              <Nav.Link href="/signup">
+                &nbsp; Create User &nbsp;
+                <FaUser style={{ marginTop: -3 }} />
+              </Nav.Link>
+            )}
             <Nav.Link href="/" style={{ paddingLeft: 80 }}>
               Logout &nbsp;
               <BiLogOut />
