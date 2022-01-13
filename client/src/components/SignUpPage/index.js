@@ -25,7 +25,7 @@ const SignUp = () => {
     const { data } = await createAccount(signUpData);
     debugger;
     if (data) {
-      history.push("/login");
+      history.push("/");
     }
   };
 

@@ -11,6 +11,7 @@ const LoginPage = () => {
   const [loggedIn, setLoggedIn] = useState();
   const [show, setShow] = useState();
   const [state, dispatch] = useStateValue();
+
   let history = useHistory();
   const handleChange = (event) => {
     setLoginData({
