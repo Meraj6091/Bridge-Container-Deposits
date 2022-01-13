@@ -56,7 +56,6 @@ function Importer() {
   };
 
   const handleOnEdit = (data) => {
-    debugger;
     setImporterData({
       ...importerData,
       ...data,

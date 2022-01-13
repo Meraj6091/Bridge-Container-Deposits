@@ -15,6 +15,8 @@ import { Link, useHistory } from "react-router-dom";
 import Importer from "../Importer";
 import Select from "../../Helpers/Select/select";
 import { BiLogOut } from "react-icons/bi";
+import { FaUser } from "react-icons/fa";
+
 import { getUsers } from "./service/index";
 import { useStateValue } from "../../Helpers/Provider";
 const NavBar = () => {
@@ -30,7 +32,12 @@ const NavBar = () => {
 
   return (
     <>
-      <Navbar fixed="top" bg="dark" variant="dark">
+      <Navbar
+        style={{ font: "#000000", backgroundColor: "#bfb9b7" }}
+        fixed="top"
+        bg="light"
+        variant="light"
+      >
         <Container>
           <Navbar.Brand href="">
             <img src={logo} height={50} width={100} alt="Logo" />

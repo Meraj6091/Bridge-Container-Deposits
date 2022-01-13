@@ -30,7 +30,7 @@ const LoginPage = () => {
           type: actionTypes.SET_USER,
           user: data.admin,
         });
-      }
+      } else localStorage.removeItem("user");
       setLoggedIn(true);
       history.push("/containerDeposits");
     } else if (data.unMatch === true) {

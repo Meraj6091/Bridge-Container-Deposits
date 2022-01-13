@@ -47,12 +47,10 @@ const ContainerDeposits = () => {
   }, [loading]);
   useEffect(() => {
     console.log(containerData);
-    debugger;
   }, [containerData]);
   const handleClose = () => setShowModal(false);
 
   const handleSelectChange = (event, id) => {
-    debugger;
     setContainerData({
       ...containerData,
       [id]: event.value,
@@ -76,7 +74,6 @@ const ContainerDeposits = () => {
   };
 
   const handleOnEdit = (data) => {
-    debugger;
     setContainerData({
       ...containerData,
       ...data,
