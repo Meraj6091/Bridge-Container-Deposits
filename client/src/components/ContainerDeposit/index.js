@@ -265,6 +265,19 @@ const ContainerDeposits = () => {
                   >
                     {onEdit ? "Update" : "Submit"}
                   </Button>
+                  &nbsp;
+                  {onEdit && (
+                    <div style={{ paddingLeft: 10 }}>
+                      <Button
+                        variant="success btn-block"
+                        type="submit"
+                        value="submit"
+                        onClick={() => window.location.reload()}
+                      >
+                        Add New
+                      </Button>
+                    </div>
+                  )}
                 </Row>
               </Row>
             </Form>
@@ -272,10 +285,9 @@ const ContainerDeposits = () => {
         </Card>
       </Container>
       <br></br>
-
-      <Card>
-        <Card.Body>
-          <Container>
+      <Container>
+        <Card>
+          <Card.Body>
             <Table responsive striped bordered hover>
               <thead>
                 <tr>
@@ -337,9 +349,9 @@ const ContainerDeposits = () => {
                   ))}
               </tbody>
             </Table>
-          </Container>
-        </Card.Body>
-      </Card>
+          </Card.Body>
+        </Card>
+      </Container>
 
       <>
         <Modal show={showModal} onHide={handleClose} centered>

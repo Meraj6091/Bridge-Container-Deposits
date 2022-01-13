@@ -137,6 +137,19 @@ function Importer() {
                   >
                     {onEdit ? "Update" : "Submit"}
                   </Button>
+                  &nbsp;
+                  {onEdit && (
+                    <div>
+                      <Button
+                        variant="success btn-block"
+                        type="submit"
+                        value="submit"
+                        onClick={() => setonEdit(false)}
+                      >
+                        Add New
+                      </Button>
+                    </div>
+                  )}
                 </Col>
               </FormGroup>
             </Form>
