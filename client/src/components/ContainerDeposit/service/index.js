@@ -1,22 +1,23 @@
 const axios = require("axios").default;
+import { heroku } from "../../apiEndPoints";
 
 export const saveContainerDeposits = (data) => {
-  return axios.post("http://localhost:4000/app/containerDeposits", data);
+  return axios.post(`${heroku}/app/containerDeposits`, data);
 };
 
 export const getContainerDeposits = (data) => {
-  return axios.get("http://localhost:4000/app/getContainerDeposits", data);
+  return axios.get(`${heroku}/app/getContainerDeposits`, data);
 };
 
 export const updateContainerDeposits = (data) => {
-  return axios.put("http://localhost:4000/app/updateContainerDeposits", data);
+  return axios.put(`${heroku}/app/updateContainerDeposits`, data);
 };
 export const deleteContainerDeposits = (data) => {
-  return axios.post("http://localhost:4000/app/deleteContainerDeposits", data);
+  return axios.post(`${heroku}/app/deleteContainerDeposits`, data);
 };
 
 //load entities
 
 export const getEntities = (data) => {
-  return axios.get("http://localhost:4000/app/getEntities", data);
+  return axios.get(`${heroku}/app/getEntities`, data);
 };

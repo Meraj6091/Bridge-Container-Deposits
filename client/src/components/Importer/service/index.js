@@ -1,16 +1,16 @@
 const axios = require("axios").default;
-
+import { heroku } from "../../apiEndPoints";
 export const importer = (data) => {
-  return axios.post("http://localhost:4000/app/importer", data);
+  return axios.post(`${heroku}/app/importer`, data);
 };
 
 export const getImporter = (data) => {
-  return axios.get("http://localhost:4000/app/getImporter", data);
+  return axios.get(`${heroku}/app/getImporter`, data);
 };
 
 export const updateImporter = (data) => {
-  return axios.put("http://localhost:4000/app/updateImporter", data);
+  return axios.put(`${heroku}/app/updateImporter`, data);
 };
 export const deleteImporter = (data) => {
-  return axios.post("http://localhost:4000/app/deleteImporter", data);
+  return axios.post(`${heroku}/app/deleteImporter`, data);
 };
