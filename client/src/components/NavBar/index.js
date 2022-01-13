@@ -18,7 +18,15 @@ import { BiLogOut } from "react-icons/bi";
 import { getUsers } from "./service/index";
 import { useStateValue } from "../../Helpers/Provider";
 const NavBar = () => {
-  const [{ user }, useState] = useStateValue();
+  const [{ user }, useStates] = useStateValue();
+  const [getUser, setGetUser] = useState(false);
+  if (user) {
+    localStorage.setItem("user", user);
+  }
+
+  useEffect(() => {
+    setGetUser(localStorage.getItem("user"));
+  }, []);
 
   return (
     <>
@@ -31,7 +39,10 @@ const NavBar = () => {
             {/* <Nav.Link href="#home">Home</Nav.Link> */}
             <Nav.Link href="/containerDeposits">Container Deposits</Nav.Link>
             <Nav.Link href="/importer">Importer</Nav.Link>
-            {user && <Nav.Link href="/signup">Create User &nbsp;</Nav.Link>}
+            {(getUser || user) && (
+              <Nav.Link href="/signup">Create User &nbsp;</Nav.Link>
+            )}
+
             <Nav.Link href="/" style={{ paddingLeft: 80 }}>
               Logout &nbsp;
               <BiLogOut />
