@@ -7,7 +7,6 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import ContainerDeposits from "./components/ContainerDeposit";
 import Entity from "./components/Entity";
 import Importer from "./components/Importer";
-// import NavBar from "./components/NavBar";
 
 function App() {
   return (
@@ -16,10 +15,10 @@ function App() {
       <Router>
         <Switch>
           <Route path="/" exact={true}>
-            <SignUp />
-          </Route>
-          <Route path="/login">
             <Login />
+          </Route>
+          <Route path="/signup">
+            <SignUp />
           </Route>
           <Route path="/containerDeposits">
             <ContainerDeposits />

@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, createContext } from "react";
 import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
+import { useStateValue } from "../../Helpers/Provider";
+import { actionTypes } from "../../Helpers/reducer";
+import NavBar from "../NavBar";
 import { login } from "./service";
+
 const LoginPage = () => {
   const [loginData, setLoginData] = useState({});
   const [loggedIn, setLoggedIn] = useState();
   const [show, setShow] = useState();
+  const [state, dispatch] = useStateValue();
   let history = useHistory();
   const handleChange = (event) => {
     setLoginData({
@@ -18,10 +23,16 @@ const LoginPage = () => {
     console.log(loginData);
     const { data } = await login(loginData);
     debugger;
-    if (data === "matched") {
+    if (data.match) {
+      if (data.admin) {
+        dispatch({
+          type: actionTypes.SET_USER,
+          user: data.admin,
+        });
+      }
       setLoggedIn(true);
       history.push("/containerDeposits");
-    } else if (data === "UnMatched") {
+    } else if (data.unMatch === true) {
       setLoggedIn(false);
       alert("Logging Details Are Wrong!");
     }
@@ -69,12 +80,12 @@ const LoginPage = () => {
               </Button>
               <br />
 
-              <Button
+              {/* <Button
                 variant="success btn-block"
                 onClick={() => history.push("/")}
               >
                 Back to Sign Up
-              </Button>
+              </Button> */}
             </Form>
           </Col>
         </Row>

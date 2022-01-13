@@ -23,19 +23,39 @@ router.post("/signup", (request, response) => {
 
 router.post("/login", async (request, response) => {
   const findAllSignUpData = await signUpTemplate.find({});
-
+  let obj = {
+    admin: "",
+    match: "",
+    unMatch: "",
+  };
   try {
     if (findAllSignUpData) {
+      if (
+        request.body.firstName === "Admin" &&
+        request.body.password === "123"
+      ) {
+        const isAdmin = findAllSignUpData.some(
+          (data) =>
+            data.firstName === request.body.firstName &&
+            data.password === request.body.password
+        );
+        if (isAdmin) {
+          obj.admin = true;
+        } else {
+          obj.admin = false;
+        }
+      }
       const isEqual = findAllSignUpData.some(
         (data) =>
           data.firstName === request.body.firstName &&
           data.password === request.body.password
       );
       if (isEqual) {
-        return response.json("matched");
+        obj.match = true;
       } else {
-        return response.json("UnMatched");
+        obj.unMatch = true;
       }
+      return response.json(obj);
     }
   } catch (err) {
     console.log(err);

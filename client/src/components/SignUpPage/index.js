@@ -105,7 +105,7 @@ const SignUp = () => {
               <br></br>
               <span style={{ fontSize: 18 }}>
                 If you already have an account
-                <Nav.Link style={{ display: "inline" }} href="/login">
+                <Nav.Link style={{ display: "inline" }} href="/">
                   Login
                 </Nav.Link>
               </span>
