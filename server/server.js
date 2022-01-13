@@ -13,4 +13,4 @@ mongoose.connect(process.env.DATABASE_ACCESS, (err) => {
 app.use(express.json());
 app.use(cors());
 app.use("/app", routesUrls);
-app.listen(4000, () => console.log("server is running"));
+app.listen(process.env.PORT || 4000, () => console.log("server is running"));
