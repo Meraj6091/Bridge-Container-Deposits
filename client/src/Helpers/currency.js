@@ -1,3 +1,5 @@
+export const type = ["MBL", "HBL"];
+
 export const currencyCodes = [
   "AED",
   "AFN",

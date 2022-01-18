@@ -25,7 +25,7 @@ import { MdModeEditOutline } from "react-icons/md";
 import { AiFillDelete } from "react-icons/ai";
 import { getDefaultValueForSelect } from "../../Helpers/Select/defaultValue";
 import NavBar from "../NavBar/index";
-import { currencyCodes } from "../../Helpers/currency";
+import { currencyCodes, type } from "../../Helpers/currency";
 
 const ContainerDeposits = () => {
   const [containerData, setContainerData] = useState({});
@@ -139,7 +139,7 @@ const ContainerDeposits = () => {
                   />
                 </Form.Group>
 
-                <Form.Group as={Col} md="4">
+                {/* <Form.Group as={Col} md="4">
                   <Form.Label>Department</Form.Label>
                   <Form.Control
                     required
@@ -149,16 +149,24 @@ const ContainerDeposits = () => {
                     onChange={handleChange}
                     value={containerData.department}
                   />
-                </Form.Group>
+                </Form.Group> */}
                 <Form.Group as={Col} md="4">
                   <Form.Label>B/L Type</Form.Label>
-                  <Form.Control
+                  <Select
+                    value={getDefaultValueForSelect(containerData.blType)}
+                    options={type.map((selector) => ({
+                      label: selector,
+                      value: selector,
+                    }))}
+                    onChange={(event) => handleSelectChange(event, "blType")}
+                  />
+                  {/* <Form.Control
                     type="text"
                     placeholder="blType"
                     id="blType"
                     onChange={handleChange}
                     value={containerData.blType}
-                  />
+                  /> */}
                 </Form.Group>
                 <Form.Group as={Col} md="4">
                   <Form.Label>Bill of Landing Number</Form.Label>
@@ -254,28 +262,28 @@ const ContainerDeposits = () => {
                   />
                 </Form.Group>
                 <br></br>
-                <Row as={Col} md="6" style={{ left: 10 }}>
-                  <Button
-                    variant="success btn-block"
-                    type="submit"
-                    value="submit"
-                  >
-                    {onEdit ? "Update" : "Submit"}
-                  </Button>
-                  &nbsp;
-                  {onEdit && (
-                    <div style={{ paddingLeft: 10 }}>
-                      <Button
-                        variant="success btn-block"
-                        type="submit"
-                        value="submit"
-                        onClick={() => window.location.reload()}
-                      >
-                        Add New
-                      </Button>
-                    </div>
-                  )}
-                </Row>
+              </Row>
+              <Row as={Col} md="6" style={{ left: 10 }}>
+                <Button
+                  variant="success btn-block"
+                  type="submit"
+                  value="submit"
+                >
+                  {onEdit ? "Update" : "Submit"}
+                </Button>
+                &nbsp;
+                {onEdit && (
+                  <div style={{ paddingLeft: 10 }}>
+                    <Button
+                      variant="success btn-block"
+                      type="submit"
+                      value="submit"
+                      onClick={() => window.location.reload()}
+                    >
+                      Add New
+                    </Button>
+                  </div>
+                )}
               </Row>
             </Form>
           </Card.Body>
@@ -290,7 +298,7 @@ const ContainerDeposits = () => {
                 <tr>
                   <th>#</th>
                   <th>Entity</th>
-                  <th>Department</th>
+                  {/* <th>Department</th> */}
                   <th>B/L Type</th>
                   <th>Bill of Landing No</th>
                   {/* <th>Shipment No</th> */}
@@ -310,7 +318,7 @@ const ContainerDeposits = () => {
                     <tr>
                       <td>{key}</td>
                       <td>{data.entity}</td>
-                      <td>{data.department}</td>
+                      {/* <td>{data.department}</td> */}
                       <td>{data.blType}</td>
                       <td>{data.billOfLandingNo}</td>
                       {/* <td>{data.shipmentNo}</td> */}

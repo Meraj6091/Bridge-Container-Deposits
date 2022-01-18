@@ -1,18 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Col, Container, Form, Row, Nav } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import { createAccount } from "./service";
 const SignUp = () => {
   const [signUpData, setSignUpData] = useState({
-    email: "meraj@gmail.com",
-    confirmPassword: "123",
-    date: "2022-01-11T06:30:30.125Z",
-    firstName: "Meraj",
-    lastName: "Rivisara",
-    password: "123",
+    email: "",
+    confirmPassword: "",
+    date: "",
+    firstName: "",
+    lastName: "",
+    password: "",
   });
-  const [submitted, setIsSubmitted] = useState(false);
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
   let history = useHistory();
+
+  useEffect(() => {
+    console.log(formErrors);
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      console.log(signUpData);
+    }
+  }, [formErrors]);
+
+  const validation = (values) => {
+    const errors = {};
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+
+    if (!values.email) {
+      debugger;
+      errors.email = "Email is required!";
+    } else if (!regex.test(values.email)) {
+      errors.email = "This is not a valid email format!";
+    }
+    // const regex =
+    //   /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    // if (!signUpData.email || regex.test(signUpData.email) === false) {
+    //   return false;
+    // }
+    return errors;
+  };
   const handleChange = (event) => {
     setSignUpData({
       ...signUpData,
@@ -21,11 +47,20 @@ const SignUp = () => {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
+    // emailValidation();
     console.log(signUpData);
+    if (validation(signUpData)) {
+      setFormErrors(validation(signUpData));
+    }
     const { data } = await createAccount(signUpData);
-    debugger;
     if (data) {
-      history.push("/");
+      if (data.password === data.confirmPassword) {
+        debugger;
+        history.push("/");
+      } else {
+        setIsSubmit(false);
+        alert("Password Wrong!");
+      }
     }
   };
 
@@ -53,6 +88,10 @@ const SignUp = () => {
                   onChange={handleChange}
                   required
                 />
+                {formErrors.email && (
+                  <p className="text-warning">{formErrors.email}</p>
+                )}
+                {/* <p>{formErrors.email}</p> */}
               </Form.Group>
               <Form.Group>
                 <Form.Label>First name</Form.Label>
