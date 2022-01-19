@@ -20,12 +20,13 @@ import {
   deleteContainerDeposits,
   updateContainerDeposits,
   getEntities,
+  getFilterContainerDeposits,
 } from "./service";
 import { MdModeEditOutline } from "react-icons/md";
 import { AiFillDelete } from "react-icons/ai";
 import { getDefaultValueForSelect } from "../../Helpers/Select/defaultValue";
 import NavBar from "../NavBar/index";
-import { currencyCodes, type } from "../../Helpers/currency";
+import { currencyCodes, filter, type } from "../../Helpers/currency";
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
 import * as ExcelJS from "exceljs/dist/exceljs";
@@ -34,6 +35,7 @@ import { excelColumns } from "../../Helpers/constants";
 
 const ContainerDeposits = () => {
   const [containerData, setContainerData] = useState({});
+  const [filterContainerData, setFilterContainerData] = useState({});
   const [loggedIn, setLoggedIn] = useState();
   const [show, setShow] = useState();
   const [onEdit, setonEdit] = useState(false);
@@ -57,6 +59,8 @@ const ContainerDeposits = () => {
 
   const [showModal, setShowModal] = useState(false);
   const [onDelete, setOnDelete] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
     getData();
@@ -76,6 +80,14 @@ const ContainerDeposits = () => {
       [id]: event.value,
     });
   };
+
+  const handleFilterSelectChange = (event, id) => {
+    setFilterContainerData({
+      ...filterContainerData,
+      [id]: event.value,
+    });
+  };
+
   const handleChange = (event) => {
     setContainerData({
       ...containerData,
@@ -123,8 +135,42 @@ const ContainerDeposits = () => {
     setShowModal(false);
     setLoading(!loading);
   };
+
+  const handleOnSearch = async (event) => {
+    event.preventDefault();
+    console.log(filterContainerData);
+    debugger;
+    const { data } = await getFilterContainerDeposits(filterContainerData);
+    if (data) {
+      setTableData({
+        data,
+      });
+    }
+  };
+
+  const handleSearch = async (event) => {
+    setFilterContainerData({
+      ...filterContainerData,
+      [event.target.id]: event.target.value,
+    });
+
+    // let value = event.target.value.toLowerCase();
+    // const { data } = await getContainerDeposits(containerData);
+
+    // let filtered = [];
+
+    // // update search value
+    // // setSearchValue(searchTerm);
+
+    // filtered = data.filter((product) => product.blType.search(value) != -1);
+
+    // // set filtered products in state
+    // setFilteredProducts(filtered);
+  };
+
   const getData = async () => {
     const { data } = await getContainerDeposits(containerData);
+    debugger;
     if (data) {
       setTableData({
         ...tableData,
@@ -394,6 +440,34 @@ const ContainerDeposits = () => {
       <Container>
         <Card>
           <Card.Body>
+            <FormControl
+              id="value"
+              type="search"
+              placeholder="Search"
+              className="me-2"
+              aria-label="Search"
+              value={filterContainerData.value}
+              onChange={(event) => handleSearch(event)}
+            />
+            <br></br>
+            <Select
+              value={getDefaultValueForSelect(filterContainerData.select)}
+              options={filter.map((selector) => ({
+                label: selector,
+                value: selector,
+              }))}
+              onChange={(event) => handleFilterSelectChange(event, "select")}
+            />
+            <Button variant="outline-success" onClick={handleOnSearch}>
+              Search
+            </Button>
+            <Button
+              variant="outline-success"
+              onClick={() => setLoading(!loading)}
+            >
+              Reset
+            </Button>
+            <br></br>
             <Table responsive striped bordered hover>
               <thead>
                 <tr>
@@ -453,6 +527,9 @@ const ContainerDeposits = () => {
                       </td>
                     </tr>
                   ))}
+                {filteredProducts.map((value, index) => {
+                  return <div>{value.blType}</div>;
+                })}
               </tbody>
             </Table>
           </Card.Body>

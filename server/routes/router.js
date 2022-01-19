@@ -186,4 +186,19 @@ router.get("/getEntities", async (request, response) => {
   }
 });
 
+//filter
+router.post("/getContainerDepositsFilters", async (request, response) => {
+  console.log(request);
+  const getContainerDepositsFilters = await containerDepositsModel
+    .find()
+    .where({ [request.body.select]: request.body.value });
+  try {
+    if (getContainerDepositsFilters) {
+      return response.json(getContainerDepositsFilters);
+    }
+  } catch (err) {
+    return response.json(err);
+  }
+});
+
 module.exports = router;
