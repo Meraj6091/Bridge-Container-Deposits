@@ -2,9 +2,12 @@ export const type = ["MBL", "HBL"];
 
 export const filter = [
   "entity",
+  "blType",
   "billOfLandingNo",
   "clientPoNo",
-  "shipmentVolume",
+  "shipmentVol",
+  "carrier",
+  "depositedAmount",
 ];
 
 export const currencyCodes = [
