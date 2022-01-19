@@ -12,33 +12,29 @@ const SignUp = () => {
     lastName: "",
     password: "",
   });
-  const [formErrors, setFormErrors] = useState({});
-  const [isSubmit, setIsSubmit] = useState(false);
+  // const [formErrors, setFormErrors] = useState({});
+  // const [isSubmit, setIsSubmit] = useState(false);
+  let formErrors = {};
   let history = useHistory();
 
-  useEffect(() => {
-    console.log(formErrors);
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(signUpData);
-    }
-  }, [formErrors]);
+  // useEffect(() => {
+  //   console.log(formErrors);
+  //   if (Object.keys(formErrors).length === 0 && isSubmit) {
+  //     console.log(signUpData);
+  //   }
+  // }, [formErrors]);
 
-  const validation = (values) => {
-    const errors = {};
+  const validation = async (values) => {
+    // const errors = {};
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
 
     if (!values.email) {
       debugger;
-      errors.email = "Email is required!";
+      formErrors.email = "Email is required!";
     } else if (!regex.test(values.email)) {
-      errors.email = "This is not a valid email format!";
+      formErrors.email = "This is not a valid email format!";
     }
-    // const regex =
-    //   /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    // if (!signUpData.email || regex.test(signUpData.email) === false) {
-    //   return false;
-    // }
-    return errors;
+    return formErrors;
   };
   const handleChange = (event) => {
     setSignUpData({
@@ -50,18 +46,22 @@ const SignUp = () => {
     event.preventDefault();
     // emailValidation();
     console.log(signUpData);
-    if (validation(signUpData)) {
-      setFormErrors(validation(signUpData));
-    }
-
-    if (signUpData.password === signUpData.confirmPassword) {
-      const { data } = await createAccount(signUpData);
-      if (data) {
+    // if (validation(signUpData)) {
+    //   setFormErrors(validation(signUpData));
+    // }
+    await validation(signUpData);
+    if (!formErrors.email) {
+      if (signUpData.password === signUpData.confirmPassword) {
+        const { data } = await createAccount(signUpData);
         debugger;
-        history.push("/");
+        if (data) {
+          history.push("/");
+        }
+      } else {
+        alert("Password Wrong!");
       }
     } else {
-      alert("Password Wrong!");
+      alert("Invalid Email!");
     }
   };
 
@@ -90,9 +90,7 @@ const SignUp = () => {
                   onChange={handleChange}
                   required
                 />
-                {formErrors.email && (
-                  <p className="text-warning">{formErrors.email}</p>
-                )}
+                {formErrors.email && <p className="text-warning">sdsdsds</p>}
                 {/* <p>{formErrors.email}</p> */}
               </Form.Group>
               <Form.Group>

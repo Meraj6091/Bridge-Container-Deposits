@@ -143,6 +143,17 @@ router.get("/getContainerDeposits", async (request, response) => {
   }
 });
 
+router.get("/getContainerDepositsFilters", async (request, response) => {
+  const getContainerDepositsFilters = await containerDepositsModel.find({});
+  try {
+    if (getContainerDepositsFilters) {
+      return response.json(getContainerDepositsFilters);
+    }
+  } catch (err) {
+    return response.json(err);
+  }
+});
+
 router.put("/updateContainerDeposits", async (request, response) => {
   console.log(request.body._id);
   try {

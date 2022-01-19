@@ -37,6 +37,8 @@ const ContainerDeposits = () => {
 
   const [showModal, setShowModal] = useState(false);
   const [onDelete, setOnDelete] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
     getData();
@@ -92,8 +94,25 @@ const ContainerDeposits = () => {
     setShowModal(false);
     setLoading(!loading);
   };
+
+  const handleSearch = async (event) => {
+    let value = event.target.value.toLowerCase();
+    const { data } = await getContainerDeposits(containerData);
+
+    let filtered = [];
+
+    // update search value
+    // setSearchValue(searchTerm);
+
+    filtered = data.filter((product) => product.blType.search(value) != -1);
+
+    // set filtered products in state
+    setFilteredProducts(filtered);
+  };
+
   const getData = async () => {
     const { data } = await getContainerDeposits(containerData);
+    debugger;
     if (data) {
       setTableData({
         ...tableData,
@@ -293,6 +312,15 @@ const ContainerDeposits = () => {
       <Container>
         <Card>
           <Card.Body>
+            <FormControl
+              type="search"
+              placeholder="Search"
+              className="me-2"
+              aria-label="Search"
+              onChange={(event) => handleSearch(event)}
+            />
+            {/* <Button variant="outline-success">Search</Button> */}
+            <br></br>
             <Table responsive striped bordered hover>
               <thead>
                 <tr>
@@ -352,6 +380,9 @@ const ContainerDeposits = () => {
                       </td>
                     </tr>
                   ))}
+                {filteredProducts.map((value, index) => {
+                  return <div>{value.blType}</div>;
+                })}
               </tbody>
             </Table>
           </Card.Body>
