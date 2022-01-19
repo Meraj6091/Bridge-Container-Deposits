@@ -20,15 +20,17 @@ import {
   deleteContainerDeposits,
   updateContainerDeposits,
   getEntities,
+  getFilterContainerDeposits,
 } from "./service";
 import { MdModeEditOutline } from "react-icons/md";
 import { AiFillDelete } from "react-icons/ai";
 import { getDefaultValueForSelect } from "../../Helpers/Select/defaultValue";
 import NavBar from "../NavBar/index";
-import { currencyCodes, type } from "../../Helpers/currency";
+import { currencyCodes, filter, type } from "../../Helpers/currency";
 
 const ContainerDeposits = () => {
   const [containerData, setContainerData] = useState({});
+  const [filterContainerData, setFilterContainerData] = useState({});
   const [loggedIn, setLoggedIn] = useState();
   const [show, setShow] = useState();
   const [onEdit, setonEdit] = useState(false);
@@ -58,6 +60,14 @@ const ContainerDeposits = () => {
       [id]: event.value,
     });
   };
+
+  const handleFilterSelectChange = (event, id) => {
+    setFilterContainerData({
+      ...filterContainerData,
+      [id]: event.value,
+    });
+  };
+
   const handleChange = (event) => {
     setContainerData({
       ...containerData,
@@ -95,19 +105,32 @@ const ContainerDeposits = () => {
     setLoading(!loading);
   };
 
+  const handleOnSearch = async (event) => {
+    event.preventDefault();
+    const { data } = await getFilterContainerDeposits(filterContainerData);
+    if (data) {
+      debugger;
+    }
+  };
+
   const handleSearch = async (event) => {
-    let value = event.target.value.toLowerCase();
-    const { data } = await getContainerDeposits(containerData);
+    setFilterContainerData({
+      ...filterContainerData,
+      [event.target.id]: event.target.value,
+    });
 
-    let filtered = [];
+    // let value = event.target.value.toLowerCase();
+    // const { data } = await getContainerDeposits(containerData);
 
-    // update search value
-    // setSearchValue(searchTerm);
+    // let filtered = [];
 
-    filtered = data.filter((product) => product.blType.search(value) != -1);
+    // // update search value
+    // // setSearchValue(searchTerm);
 
-    // set filtered products in state
-    setFilteredProducts(filtered);
+    // filtered = data.filter((product) => product.blType.search(value) != -1);
+
+    // // set filtered products in state
+    // setFilteredProducts(filtered);
   };
 
   const getData = async () => {
@@ -313,13 +336,26 @@ const ContainerDeposits = () => {
         <Card>
           <Card.Body>
             <FormControl
+              id="value"
               type="search"
               placeholder="Search"
               className="me-2"
               aria-label="Search"
+              value={filterContainerData.value}
               onChange={(event) => handleSearch(event)}
             />
-            {/* <Button variant="outline-success">Search</Button> */}
+            <br></br>
+            <Select
+              value={getDefaultValueForSelect(filterContainerData.select)}
+              options={filter.map((selector) => ({
+                label: selector,
+                value: selector,
+              }))}
+              onChange={(event) => handleFilterSelectChange(event, "select")}
+            />
+            <Button variant="outline-success" onClick={handleOnSearch}>
+              Search
+            </Button>
             <br></br>
             <Table responsive striped bordered hover>
               <thead>
