@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Col, Container, Form, Row, Nav } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import { createAccount } from "./service";
+import NavBar from "../NavBar/index";
 const SignUp = () => {
   const [signUpData, setSignUpData] = useState({
     email: "",
@@ -52,20 +53,21 @@ const SignUp = () => {
     if (validation(signUpData)) {
       setFormErrors(validation(signUpData));
     }
-    const { data } = await createAccount(signUpData);
-    if (data) {
-      if (data.password === data.confirmPassword) {
+
+    if (signUpData.password === signUpData.confirmPassword) {
+      const { data } = await createAccount(signUpData);
+      if (data) {
         debugger;
         history.push("/");
-      } else {
-        setIsSubmit(false);
-        alert("Password Wrong!");
       }
+    } else {
+      alert("Password Wrong!");
     }
   };
 
   return (
     <>
+      <NavBar />
       <Container>
         <h1 className="shadow-sm text-success mt-5 p-3 text-center rounded">
           Sign Up
