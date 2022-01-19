@@ -69,7 +69,18 @@ const ContainerDeposits = () => {
       await updateContainerDeposits(containerData);
     } else {
       await saveContainerDeposits(containerData);
+      setContainerData({
+        poNo: "",
+        billOfLandingNo: "",
+        shipmentNo: "",
+        clientPoNo: "",
+        shipmentVol: "",
+        carrier: "",
+        customerHouseAgent: "",
+        depositedAmount: "",
+      });
     }
+
     setLoading(!loading);
   };
 
@@ -83,7 +94,7 @@ const ContainerDeposits = () => {
   const setDataByOnDelete = (data) => {
     setContainerData({
       ...containerData,
-      ...data,
+      id: data._id,
     });
     setShowModal(true);
   };

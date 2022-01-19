@@ -17,7 +17,7 @@ router.post("/signup", (request, response) => {
       return response.json(data);
     })
     .catch((err) => {
-      return response.json(err);
+      // return response.json(err);
     });
 });
 
@@ -109,7 +109,7 @@ router.post("/deleteImporter", async (request, response) => {
   try {
     const importer = await importerTemplate
       .deleteOne()
-      .where({ _id: request.body._id });
+      .where({ _id: request.body.id });
     if (importer) {
       return response.json(importer);
     }
@@ -163,7 +163,7 @@ router.post("/deleteContainerDeposits", async (request, response) => {
   try {
     const deleteContainerDeposits = await containerDepositsModel
       .deleteOne()
-      .where({ _id: request.body._id });
+      .where({ _id: request.body.id });
     if (deleteContainerDeposits) {
       return response.json(deleteContainerDeposits);
     }
