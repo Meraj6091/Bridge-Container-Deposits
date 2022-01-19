@@ -56,11 +56,24 @@ function Importer() {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    debugger;
     if (onEdit) {
       await updateImporter(importerData);
     } else {
-      await importer(importerData);
-      setImporterData({});
+      if (
+        tableData.data?.some(
+          (data) => data.importerName === importerData.importerName
+        )
+      ) {
+        alert("Importer Name is already exists");
+      } else {
+        await importer(importerData);
+        setImporterData({
+          importerName: "",
+          entity: "",
+        });
+      }
     }
     setLoading(!loading);
   };
