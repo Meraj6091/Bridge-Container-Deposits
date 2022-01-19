@@ -420,7 +420,6 @@ const ContainerDeposits = () => {
                   </div>
                 )}
                 &nbsp;&nbsp;
-                <Button onClick={exportToCSV}>Export </Button>
               </Row>
             </Form>
           </Card.Body>
@@ -430,30 +429,41 @@ const ContainerDeposits = () => {
       <Container>
         <Card>
           <Card.Body>
-            <FormControl
-              id="value"
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-              value={filterContainerData.value}
-              onChange={(event) => handleSearch(event)}
-            />
+            <Row as={Col} md="4" style={{ left: 10 }}>
+              <FormControl
+                id="value"
+                type="search"
+                placeholder="Search"
+                className="me-2"
+                aria-label="Search"
+                value={filterContainerData.value}
+                onChange={(event) => handleSearch(event)}
+              />
+              &nbsp;&nbsp;&nbsp;
+              <Select
+                value={getDefaultValueForSelect(filterContainerData.select)}
+                options={filter.map((selector) => ({
+                  label: selector,
+                  value: selector,
+                }))}
+                onChange={(event) => handleFilterSelectChange(event, "select")}
+              />
+              <Row as={Col} md="2" style={{ left: 10 }}>
+                <Button style={{ marginLeft: 350 }} onClick={exportToCSV}>
+                  Export{" "}
+                </Button>
+              </Row>
+            </Row>
             <br></br>
-            <Select
-              value={getDefaultValueForSelect(filterContainerData.select)}
-              options={filter.map((selector) => ({
-                label: selector,
-                value: selector,
-              }))}
-              onChange={(event) => handleFilterSelectChange(event, "select")}
-            />
+            &nbsp;&nbsp;
             <Button variant="outline-success" onClick={handleOnSearch}>
               Search
             </Button>
+            &nbsp;&nbsp;
             <Button variant="outline-success" onClick={handleReset}>
               Reset
             </Button>
+            <br></br>
             <br></br>
             <Table responsive striped bordered hover>
               <thead>
