@@ -144,7 +144,7 @@ router.get("/getContainerDeposits", async (request, response) => {
 });
 
 router.get("/getContainerDepositsFilters", async (request, response) => {
-  let data = request.body.select;
+  const data = request.body.select;
   const getContainerDepositsFilters = await containerDepositsModel
     .find()
     .where({ entity: request.body.value });
