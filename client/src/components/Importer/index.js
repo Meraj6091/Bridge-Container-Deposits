@@ -63,10 +63,12 @@ function Importer() {
     } else {
       if (
         tableData.data?.some(
-          (data) => data.importerName === importerData.importerName
+          (data) =>
+            data.importerName === importerData.importerName &&
+            data.entity === importerData.entity
         )
       ) {
-        alert("Importer Name is already exists");
+        alert("There Cant be same Entities for Same Importer Name");
       } else {
         await importer(importerData);
         setImporterData({

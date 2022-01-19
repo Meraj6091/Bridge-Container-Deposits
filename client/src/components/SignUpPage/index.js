@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Button, Col, Container, Form, Row, Nav } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
+import NavBar from "../NavBar";
 import { createAccount } from "./service";
 const SignUp = () => {
   const [signUpData, setSignUpData] = useState({
     email: "",
     confirmPassword: "",
-
     firstName: "",
     lastName: "",
     password: "",
@@ -47,11 +47,14 @@ const SignUp = () => {
       } else {
         alert("Password is Wrong!");
       }
+    } else {
+      alert("Invalid Email");
     }
   };
 
   return (
     <>
+      <NavBar />
       <Container>
         <h1 className="shadow-sm text-success mt-5 p-3 text-center rounded">
           Sign Up

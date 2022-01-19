@@ -5,6 +5,7 @@ import {
   Col,
   Container,
   Form,
+  Modal,
   Row,
   Navbar,
   Nav,
@@ -22,6 +23,15 @@ import { useStateValue } from "../../Helpers/Provider";
 const NavBar = () => {
   const [{ user }, useStates] = useStateValue();
   const [getUser, setGetUser] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  let history = useHistory();
+
+  const handleClose = () => setShowModal(false);
+
+  const handleOnLogout = () => {
+    history.push("/");
+  };
+
   if (user) {
     localStorage.setItem("user", user);
   }
@@ -50,7 +60,10 @@ const NavBar = () => {
               <Nav.Link href="/signup">Create User &nbsp;</Nav.Link>
             )}
 
-            <Nav.Link href="/" style={{ paddingLeft: 80 }}>
+            <Nav.Link
+              onClick={() => setShowModal(true)}
+              style={{ paddingLeft: 80 }}
+            >
               Logout &nbsp;
               <BiLogOut />
             </Nav.Link>
@@ -58,6 +71,22 @@ const NavBar = () => {
         </Container>
       </Navbar>
       <br />
+      <>
+        <Modal show={showModal} onHide={handleClose} centered>
+          <Modal.Header closeButton></Modal.Header>
+          <Modal.Body>
+            <h6>Are you sure want to Logout!</h6>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              No
+            </Button>
+            <Button variant="primary" onClick={handleOnLogout}>
+              Yes
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </>
     </>
   );
 };
