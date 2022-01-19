@@ -212,7 +212,6 @@ const ContainerDeposits = () => {
         CustomerHouseAgent,
         PoNumber,
         ShipmentNo,
-
         ...rest,
       })
     );
@@ -430,6 +429,15 @@ const ContainerDeposits = () => {
         <Card>
           <Card.Body>
             <Row as={Col} md="4" style={{ left: 10 }}>
+              <Select
+                value={getDefaultValueForSelect(filterContainerData.select)}
+                options={filter.map((selector) => ({
+                  label: selector,
+                  value: selector,
+                }))}
+                onChange={(event) => handleFilterSelectChange(event, "select")}
+              />
+              &nbsp;&nbsp;&nbsp;
               <FormControl
                 id="value"
                 type="search"
@@ -438,15 +446,6 @@ const ContainerDeposits = () => {
                 aria-label="Search"
                 value={filterContainerData.value}
                 onChange={(event) => handleSearch(event)}
-              />
-              &nbsp;&nbsp;&nbsp;
-              <Select
-                value={getDefaultValueForSelect(filterContainerData.select)}
-                options={filter.map((selector) => ({
-                  label: selector,
-                  value: selector,
-                }))}
-                onChange={(event) => handleFilterSelectChange(event, "select")}
               />
               <Row as={Col} md="2" style={{ left: 10 }}>
                 <Button style={{ marginLeft: 350 }} onClick={exportToCSV}>
