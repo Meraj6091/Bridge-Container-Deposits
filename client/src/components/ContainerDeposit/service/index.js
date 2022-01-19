@@ -23,5 +23,5 @@ export const getEntities = (data) => {
 };
 
 export const getFilterContainerDeposits = (data) => {
-  return axios.get(`${apiEndPoint()}/app/getContainerDepositsFilters`, data);
+  return axios.post(`${apiEndPoint()}/app/getContainerDepositsFilters`, data);
 };

@@ -17,7 +17,7 @@ router.post("/signup", (request, response) => {
       return response.json(data);
     })
     .catch((err) => {
-      return response.json(err);
+      // return response.json(err);
     });
 });
 
@@ -109,7 +109,7 @@ router.post("/deleteImporter", async (request, response) => {
   try {
     const importer = await importerTemplate
       .deleteOne()
-      .where({ _id: request.body._id });
+      .where({ _id: request.body.id });
     if (importer) {
       return response.json(importer);
     }
@@ -143,20 +143,6 @@ router.get("/getContainerDeposits", async (request, response) => {
   }
 });
 
-router.get("/getContainerDepositsFilters", async (request, response) => {
-  const data = request.body.select;
-  const getContainerDepositsFilters = await containerDepositsModel
-    .find()
-    .where({ entity: request.body.value });
-  try {
-    if (getContainerDepositsFilters) {
-      return response.json(getContainerDepositsFilters);
-    }
-  } catch (err) {
-    return response.json(err);
-  }
-});
-
 router.put("/updateContainerDeposits", async (request, response) => {
   console.log(request.body._id);
   try {
@@ -177,7 +163,7 @@ router.post("/deleteContainerDeposits", async (request, response) => {
   try {
     const deleteContainerDeposits = await containerDepositsModel
       .deleteOne()
-      .where({ _id: request.body._id });
+      .where({ _id: request.body.id });
     if (deleteContainerDeposits) {
       return response.json(deleteContainerDeposits);
     }
@@ -194,6 +180,21 @@ router.get("/getEntities", async (request, response) => {
     if (getEntities) {
       console.log(getEntities);
       return response.json(getEntities);
+    }
+  } catch (err) {
+    return response.json(err);
+  }
+});
+
+//filter
+router.post("/getContainerDepositsFilters", async (request, response) => {
+  console.log(request);
+  const getContainerDepositsFilters = await containerDepositsModel
+    .find()
+    .where({ [request.body.select]: request.body.value });
+  try {
+    if (getContainerDepositsFilters) {
+      return response.json(getContainerDepositsFilters);
     }
   } catch (err) {
     return response.json(err);

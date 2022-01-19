@@ -39,6 +39,15 @@ function Importer() {
     getData();
   }, [loading]);
 
+  useEffect(() => {
+    if (onEdit === false) {
+      setImporterData({
+        importerName: "",
+        entity: "",
+      });
+    }
+  }, [onEdit]);
+
   const handleChange = (event) => {
     setImporterData({
       ...importerData,
@@ -47,25 +56,41 @@ function Importer() {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    debugger;
     if (onEdit) {
       await updateImporter(importerData);
     } else {
-      await importer(importerData);
+      if (
+        tableData.data?.some(
+          (data) =>
+            data.importerName === importerData.importerName &&
+            data.entity === importerData.entity
+        )
+      ) {
+        alert("There Cant be same Entities for Same Importer Name");
+      } else {
+        await importer(importerData);
+        setImporterData({
+          importerName: "",
+          entity: "",
+        });
+      }
     }
     setLoading(!loading);
   };
 
   const handleOnEdit = (data) => {
     setImporterData({
-      ...importerData,
       ...data,
     });
     setonEdit(true);
   };
+
   const setDataByOnDelete = (data) => {
     setImporterData({
       ...importerData,
-      ...data,
+      id: data._id,
     });
     setShowModal(true);
   };
@@ -92,18 +117,21 @@ function Importer() {
         <h1 className="shadow-sm text-success mt-5 p-3 text-center rounded">
           Importers
         </h1>
-        <Form onSubmit={(e) => setShow(true, e.preventDefault())}>
-          <FormGroup controlId="Importer Name">
-            <Col sm={5}>Importer Name</Col>
-            <Col sm={3}>
-              <FormControl
-                type="text"
-                id="importerName"
-                placeholder="Importer Name"
-                onChange={handleChange}
-                value={importerData.importerName}
-              />
-              <Button
+
+        <div>
+          <Form onSubmit={handleSubmit}>
+            <FormGroup controlId="Importer Name">
+              <Col sm={5}>Importer Name</Col>
+              <Col sm={3}>
+                <FormControl
+                  type="text"
+                  id="importerName"
+                  placeholder="Importer Name"
+                  onChange={handleChange}
+                  value={importerData.importerName}
+                  required
+                />
+                {/* <Button
                 style={{ marginTop: 14 }}
                 variant="success btn-block"
                 type="submit"
@@ -111,110 +139,106 @@ function Importer() {
                 disabled={!importerData.importerName}
               >
                 Add
-              </Button>
-            </Col>
-          </FormGroup>
-        </Form>
-        {show && (
-          <div>
-            <Form onSubmit={handleSubmit}>
-              <FormGroup controlId="entity">
-                <Col sm={5}>Entity</Col>
-                <Col sm={3}>
-                  <FormControl
-                    type="text"
-                    id="entity"
-                    placeholder="Entity"
-                    onChange={handleChange}
-                    value={importerData.entity}
-                  />
-                  <Button
-                    style={{ marginTop: 14 }}
-                    variant="success btn-block"
-                    type="submit"
-                    value="submit"
-                  >
-                    {onEdit ? "Update" : "Submit"}
-                  </Button>
-                  &nbsp;
-                  {onEdit && (
-                    <div>
-                      <Button
-                        variant="success btn-block"
-                        type="submit"
-                        value="submit"
-                        onClick={() => setonEdit(false)}
-                      >
-                        Add New
-                      </Button>
-                    </div>
-                  )}
-                </Col>
-              </FormGroup>
-            </Form>
-            <Card>
-              <Card.Body>
-                <Table striped bordered hover>
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Importer Name</th>
-                      <th>Entity</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {tableData.data &&
-                      tableData.data.map((data, key) => (
-                        <tr>
-                          <td>{key}</td>
-                          <td>{data.importerName}</td>
-                          <td>{data.entity}</td>
-                          <td>
-                            {
-                              <MdModeEditOutline
-                                data-toggle="tooltip"
-                                data-placement="bottom"
-                                title="Edit"
-                                color="blue"
-                                onClick={() => handleOnEdit(data)}
-                              />
-                            }
-                            &nbsp; &nbsp; &nbsp;
-                            {
-                              <AiFillDelete
-                                data-toggle="tooltip"
-                                data-placement="bottom"
-                                title="Delete"
-                                color="red"
-                                onClick={() => setDataByOnDelete(data)}
-                              />
-                            }
-                          </td>
-                        </tr>
-                      ))}
-                  </tbody>
-                </Table>
-              </Card.Body>
-            </Card>
-            <>
-              <Modal show={showModal} onHide={handleClose} centered>
-                <Modal.Header closeButton></Modal.Header>
-                <Modal.Body>
-                  <h6>Are you sure want to Delete This!</h6>
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button variant="secondary" onClick={handleClose}>
-                    No
-                  </Button>
-                  <Button variant="primary" onClick={() => handleOnDelete()}>
-                    Yes
-                  </Button>
-                </Modal.Footer>
-              </Modal>
-            </>
-          </div>
-        )}
+              </Button> */}
+              </Col>
+            </FormGroup>
+            <FormGroup controlId="entity">
+              <Col sm={5}>Entity</Col>
+              <Col sm={3}>
+                <FormControl
+                  type="text"
+                  id="entity"
+                  placeholder="Entity"
+                  onChange={handleChange}
+                  value={importerData.entity}
+                  required
+                />
+                <Button
+                  style={{ marginTop: 14 }}
+                  variant="success btn-block"
+                  type="submit"
+                  value="submit"
+                >
+                  {onEdit ? "Update" : "Submit"}
+                </Button>
+                &nbsp;
+                {onEdit && (
+                  <div>
+                    <Button
+                      variant="success btn-block"
+                      type="submit"
+                      value="submit"
+                      onClick={() => setonEdit(false)}
+                    >
+                      Add New
+                    </Button>
+                  </div>
+                )}
+              </Col>
+            </FormGroup>
+          </Form>
+          <Card>
+            <Card.Body>
+              <Table striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Importer Name</th>
+                    <th>Entity</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {tableData.data &&
+                    tableData.data.map((data, key) => (
+                      <tr>
+                        <td>{key}</td>
+                        <td>{data.importerName}</td>
+                        <td>{data.entity}</td>
+                        <td>
+                          {
+                            <MdModeEditOutline
+                              data-toggle="tooltip"
+                              data-placement="bottom"
+                              title="Edit"
+                              color="blue"
+                              onClick={() => handleOnEdit(data)}
+                            />
+                          }
+                          &nbsp; &nbsp; &nbsp;
+                          {
+                            <AiFillDelete
+                              data-toggle="tooltip"
+                              data-placement="bottom"
+                              title="Delete"
+                              color="red"
+                              onClick={() => setDataByOnDelete(data)}
+                            />
+                          }
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </Table>
+            </Card.Body>
+          </Card>
+          <>
+            <Modal show={showModal} onHide={handleClose} centered>
+              <Modal.Header closeButton></Modal.Header>
+              <Modal.Body>
+                <h6>Are you sure want to Delete This!</h6>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                  No
+                </Button>
+                <Button variant="primary" onClick={() => handleOnDelete()}>
+                  Yes
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          </>
+        </div>
       </Container>
     </>
   );

@@ -1,41 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { Button, Col, Container, Form, Row, Nav } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
+import NavBar from "../NavBar";
 import { createAccount } from "./service";
-import NavBar from "../NavBar/index";
 const SignUp = () => {
   const [signUpData, setSignUpData] = useState({
     email: "",
     confirmPassword: "",
-    date: "",
     firstName: "",
     lastName: "",
     password: "",
   });
-  // const [formErrors, setFormErrors] = useState({});
-  // const [isSubmit, setIsSubmit] = useState(false);
   let formErrors = {};
+
   let history = useHistory();
 
-  // useEffect(() => {
-  //   console.log(formErrors);
-  //   if (Object.keys(formErrors).length === 0 && isSubmit) {
-  //     console.log(signUpData);
-  //   }
-  // }, [formErrors]);
-
   const validation = async (values) => {
-    // const errors = {};
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
 
     if (!values.email) {
-      debugger;
-      formErrors.email = "Email is required!";
+      formErrors.errors = "Email is required!";
     } else if (!regex.test(values.email)) {
-      formErrors.email = "This is not a valid email format!";
+      formErrors.errors = "This is not a valid email format!";
     }
-    return formErrors;
   };
+
   const handleChange = (event) => {
     setSignUpData({
       ...signUpData,
@@ -46,22 +35,20 @@ const SignUp = () => {
     event.preventDefault();
     // emailValidation();
     console.log(signUpData);
-    // if (validation(signUpData)) {
-    //   setFormErrors(validation(signUpData));
-    // }
     await validation(signUpData);
-    if (!formErrors.email) {
+
+    if (!formErrors.errors) {
       if (signUpData.password === signUpData.confirmPassword) {
         const { data } = await createAccount(signUpData);
-        debugger;
         if (data) {
+          debugger;
           history.push("/");
         }
       } else {
-        alert("Password Wrong!");
+        alert("Password is Wrong!");
       }
     } else {
-      alert("Invalid Email!");
+      alert("Invalid Email");
     }
   };
 
@@ -90,8 +77,9 @@ const SignUp = () => {
                   onChange={handleChange}
                   required
                 />
-                {formErrors.email && <p className="text-warning">sdsdsds</p>}
-                {/* <p>{formErrors.email}</p> */}
+                {formErrors.errors && (
+                  <p className="text-warning">{formErrors.errors}</p>
+                )}
               </Form.Group>
               <Form.Group>
                 <Form.Label>First name</Form.Label>

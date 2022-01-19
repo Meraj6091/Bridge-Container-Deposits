@@ -27,6 +27,11 @@ import { AiFillDelete } from "react-icons/ai";
 import { getDefaultValueForSelect } from "../../Helpers/Select/defaultValue";
 import NavBar from "../NavBar/index";
 import { currencyCodes, filter, type } from "../../Helpers/currency";
+import * as FileSaver from "file-saver";
+import * as XLSX from "xlsx";
+import * as ExcelJS from "exceljs/dist/exceljs";
+import { saveAs } from "file-saver";
+import { excelColumns } from "../../Helpers/constants";
 
 const ContainerDeposits = () => {
   const [containerData, setContainerData] = useState({});
@@ -35,7 +40,22 @@ const ContainerDeposits = () => {
   const [show, setShow] = useState();
   const [onEdit, setonEdit] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [tableData, setTableData] = useState({});
+  const [tableData, setTableData] = useState({
+    headers: [
+      "Entity",
+      "Department",
+      "B/L Type",
+      "Bill of landing no",
+      "Shipment No",
+      "Po Number",
+      "Client Po Number",
+      "Shipment Vol",
+      "Carrier",
+      "Customs House Agent",
+      "Currency",
+      "Deposited Amount",
+    ],
+  });
 
   const [showModal, setShowModal] = useState(false);
   const [onDelete, setOnDelete] = useState(false);
@@ -81,7 +101,18 @@ const ContainerDeposits = () => {
       await updateContainerDeposits(containerData);
     } else {
       await saveContainerDeposits(containerData);
+      setContainerData({
+        poNo: "",
+        billOfLandingNo: "",
+        shipmentNo: "",
+        clientPoNo: "",
+        shipmentVol: "",
+        carrier: "",
+        customerHouseAgent: "",
+        depositedAmount: "",
+      });
     }
+
     setLoading(!loading);
   };
 
@@ -95,7 +126,7 @@ const ContainerDeposits = () => {
   const setDataByOnDelete = (data) => {
     setContainerData({
       ...containerData,
-      ...data,
+      id: data._id,
     });
     setShowModal(true);
   };
@@ -107,9 +138,13 @@ const ContainerDeposits = () => {
 
   const handleOnSearch = async (event) => {
     event.preventDefault();
+    console.log(filterContainerData);
+    debugger;
     const { data } = await getFilterContainerDeposits(filterContainerData);
     if (data) {
-      debugger;
+      setTableData({
+        data,
+      });
     }
   };
 
@@ -156,6 +191,74 @@ const ContainerDeposits = () => {
     }
   };
 
+  const exportToCSV = () => {
+    debugger;
+    console.log(tableData.data);
+    const newArrayOfObj = tableData.data.map(
+      ({
+        billOfLandingNo: BillofLandingNumber,
+        blType: BLType,
+        carrier: Carrier,
+        clientPoNo: ClientPoNumber,
+        currency: Currency,
+        customerHouseAgent: CustomerHouseAgent,
+        depositedAmount: DepositedAmount,
+        entity: Entity,
+        poNo: PoNumber,
+        shipmentNo: ShipmentNo,
+        shipmentVol: ShipmentVol,
+        department: department,
+        __v: __v,
+        _id: _id,
+        ...rest
+      }) => ({
+        BillofLandingNumber,
+        BLType,
+        Carrier,
+        ClientPoNumber,
+        Currency,
+        CustomerHouseAgent,
+        DepositedAmount,
+        Entity,
+        PoNumber,
+        ShipmentNo,
+        ShipmentVol,
+        ...rest,
+      })
+    );
+    console.log(newArrayOfObj);
+    const fileType =
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+    const fileExtension = ".xlsx";
+    const ws = XLSX.utils.json_to_sheet(newArrayOfObj);
+    const wscols = [
+      { wch: 20 },
+      { wch: 20 },
+      { wch: 20 },
+      { wch: 20 },
+      { wch: 20 },
+      { wch: 20 },
+      { wch: 20 },
+      { wch: 20 },
+      { wch: 20 },
+      { wch: 20 },
+      { wch: 20 },
+      { wch: 20 },
+      { wch: 20 },
+      { wch: 20 },
+      { wch: 20 },
+      { wch: 20 },
+      { wch: 20 },
+      { wch: 20 },
+      { wch: 20 },
+    ];
+
+    ws["!cols"] = wscols;
+    const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const data = new Blob([excelBuffer], { type: fileType });
+    FileSaver.saveAs(data, "Container Deposits" + fileExtension);
+  };
   return (
     <>
       <NavBar />
@@ -326,6 +429,7 @@ const ContainerDeposits = () => {
                     </Button>
                   </div>
                 )}
+                &nbsp;&nbsp;
               </Row>
             </Form>
           </Card.Body>
@@ -335,27 +439,44 @@ const ContainerDeposits = () => {
       <Container>
         <Card>
           <Card.Body>
-            <FormControl
-              id="value"
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-              value={filterContainerData.value}
-              onChange={(event) => handleSearch(event)}
-            />
+            <Row as={Col} md="4" style={{ left: 10 }}>
+              <FormControl
+                id="value"
+                type="search"
+                placeholder="Search"
+                className="me-2"
+                aria-label="Search"
+                value={filterContainerData.value}
+                onChange={(event) => handleSearch(event)}
+              />
+              &nbsp;&nbsp;&nbsp;
+              <Select
+                value={getDefaultValueForSelect(filterContainerData.select)}
+                options={filter.map((selector) => ({
+                  label: selector,
+                  value: selector,
+                }))}
+                onChange={(event) => handleFilterSelectChange(event, "select")}
+              />
+              <Row as={Col} md="2" style={{ left: 10 }}>
+                <Button style={{ marginLeft: 350 }} onClick={exportToCSV}>
+                  Export{" "}
+                </Button>
+              </Row>
+            </Row>
             <br></br>
-            <Select
-              value={getDefaultValueForSelect(filterContainerData.select)}
-              options={filter.map((selector) => ({
-                label: selector,
-                value: selector,
-              }))}
-              onChange={(event) => handleFilterSelectChange(event, "select")}
-            />
+            &nbsp;&nbsp;
             <Button variant="outline-success" onClick={handleOnSearch}>
               Search
             </Button>
+            &nbsp;&nbsp;
+            <Button
+              variant="outline-success"
+              onClick={() => setLoading(!loading)}
+            >
+              Reset
+            </Button>
+            <br></br>
             <br></br>
             <Table responsive striped bordered hover>
               <thead>
