@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Col, Container, Form, Row, Nav } from "react-bootstrap";
+import { Button, Col, Container, Form, Row, Nav, Card } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import NavBar from "../NavBar";
 import { createAccount, getAllUsers } from "./service";
@@ -208,12 +208,20 @@ const SignUp = () => {
           Copyright © 2021 Bridge 2020. All Rights Reserved.
         </h6>
       </Container>
-      <BootstrapTable
-        keyField="id"
-        data={allUsers}
-        columns={signUpData.columns}
-        pagination={paginationFactory(options)}
-      />
+      <Container>
+        <Card>
+          <Card.Body>
+            <BootstrapTable
+              keyField="id"
+              data={allUsers}
+              columns={signUpData.columns}
+              pagination={paginationFactory(options)}
+            />
+          </Card.Body>
+        </Card>
+      </Container>
+      <br></br>
+      <br></br>
     </>
   );
 };
