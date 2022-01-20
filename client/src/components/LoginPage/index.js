@@ -27,9 +27,7 @@ const LoginPage = () => {
     );
     const { data } = await login(loginData);
 
-    debugger;
     if (data.match) {
-      debugger;
       if (data.admin) {
         dispatch({
           type: actionTypes.SET_USER,

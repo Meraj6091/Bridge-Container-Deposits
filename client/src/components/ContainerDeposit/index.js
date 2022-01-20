@@ -148,7 +148,6 @@ const ContainerDeposits = () => {
   const handleOnSearch = async (event) => {
     event.preventDefault();
     console.log(filterContainerData);
-    debugger;
     const { data } = await getFilterContainerDeposits(filterContainerData);
     if (data) {
       setTableData({
@@ -179,7 +178,6 @@ const ContainerDeposits = () => {
 
   const getData = async () => {
     const { data } = await getContainerDeposits(containerData);
-    debugger;
     if (data) {
       setTableData({
         ...tableData,
@@ -205,7 +203,6 @@ const ContainerDeposits = () => {
   };
 
   const exportToCSV = () => {
-    debugger;
     console.log(tableData.data);
     const newArrayOfObj = tableData.data.map(
       ({

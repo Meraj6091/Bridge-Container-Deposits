@@ -61,7 +61,6 @@ const SignUp = () => {
       if (signUpData.password === signUpData.confirmPassword) {
         const { data } = await createAccount(signUpData);
         if (data) {
-          debugger;
           history.push("/");
         }
       } else {
@@ -114,7 +113,6 @@ const SignUp = () => {
   };
   const getAllRegisteredUsers = async () => {
     const { data } = await getAllUsers();
-    debugger;
     setAllUsers(data);
   };
   return (

@@ -60,7 +60,6 @@ function Importer() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    debugger;
     if (onEdit) {
       await updateImporter(importerData);
       toast.success("Updated Successfully", {
