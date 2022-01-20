@@ -10,6 +10,7 @@ router.post("/signup", (request, response) => {
     lastName: request.body.lastName,
     password: request.body.password,
     confirmPassword: request.body.confirmPassword,
+    email: request.body.email,
   });
   signUpUser
     .save()
@@ -195,6 +196,20 @@ router.post("/getContainerDepositsFilters", async (request, response) => {
   try {
     if (getContainerDepositsFilters) {
       return response.json(getContainerDepositsFilters);
+    }
+  } catch (err) {
+    return response.json(err);
+  }
+});
+
+//get all users
+
+router.get("/getAllUsers", async (request, response) => {
+  try {
+    const getAllUsers = await signUpTemplate.find({});
+    if (getAllUsers) {
+      console.log(getAllUsers);
+      return response.json(getAllUsers);
     }
   } catch (err) {
     return response.json(err);
