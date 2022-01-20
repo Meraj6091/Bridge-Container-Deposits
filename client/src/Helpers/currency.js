@@ -31,6 +31,13 @@ export const filter = [
   },
 ];
 
+export const ToastTypes = {
+  SUCCESS: { appearance: "success" },
+  ERROR: { appearance: "error" },
+  WARNING: { appearance: "warning" },
+  INFO: { appearance: "info" },
+};
+
 export const currencyCodes = [
   "AED",
   "AFN",
