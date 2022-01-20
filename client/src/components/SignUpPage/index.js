@@ -204,9 +204,6 @@ const SignUp = () => {
             </Form>
           </Col>
         </Row>
-        <h6 className="mt-5 p-5 text-center text-secondary ">
-          Copyright © 2021 Bridge 2020. All Rights Reserved.
-        </h6>
       </Container>
       <Container>
         <Card>
@@ -219,6 +216,9 @@ const SignUp = () => {
             />
           </Card.Body>
         </Card>
+        <h6 className="mt-5 p-5 text-center text-secondary ">
+          Copyright © 2021 Bridge 2020. All Rights Reserved.
+        </h6>
       </Container>
       <br></br>
       <br></br>
