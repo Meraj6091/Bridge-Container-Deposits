@@ -32,6 +32,8 @@ import * as XLSX from "xlsx";
 import * as ExcelJS from "exceljs/dist/exceljs";
 import { saveAs } from "file-saver";
 import { excelColumns } from "../../Helpers/constants";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ContainerDeposits = () => {
   const [containerData, setContainerData] = useState({});
@@ -97,8 +99,20 @@ const ContainerDeposits = () => {
         depositedAmount: "",
       });
     }
-
     setLoading(!loading);
+    toast.success(
+      `${onEdit ? "Updated Successfully" : "Created Successfully"}`,
+      {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      }
+    );
   };
 
   const handleOnEdit = (data) => {
@@ -119,6 +133,16 @@ const ContainerDeposits = () => {
     await deleteContainerDeposits(containerData);
     setShowModal(false);
     setLoading(!loading);
+    toast.success("Deleted Successfully", {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
   };
 
   const handleOnSearch = async (event) => {
@@ -548,6 +572,17 @@ const ContainerDeposits = () => {
           </Modal.Footer>
         </Modal>
       </>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </>
   );
 };

@@ -21,6 +21,9 @@ import {
 } from "./service/index";
 import { MdModeEditOutline } from "react-icons/md";
 import { AiFillDelete } from "react-icons/ai";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function Importer() {
   let history = useHistory();
   const [importerData, setImporterData] = useState({});
@@ -60,6 +63,16 @@ function Importer() {
     debugger;
     if (onEdit) {
       await updateImporter(importerData);
+      toast.success("Updated Successfully", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     } else {
       if (
         tableData.data?.some(
@@ -74,6 +87,16 @@ function Importer() {
         setImporterData({
           importerName: "",
           entity: "",
+        });
+        toast.success("Created Successfully", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
         });
       }
     }
@@ -98,6 +121,16 @@ function Importer() {
     await deleteImporter(importerData);
     setShowModal(false);
     setLoading(!loading);
+    toast.success("Deleted Successfully", {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
   };
   const getData = async () => {
     const { data } = await getImporter(importerData);
@@ -240,6 +273,17 @@ function Importer() {
           </>
         </div>
       </Container>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </>
   );
 }
