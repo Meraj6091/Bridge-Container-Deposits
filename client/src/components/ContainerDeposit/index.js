@@ -40,22 +40,7 @@ const ContainerDeposits = () => {
   const [show, setShow] = useState();
   const [onEdit, setonEdit] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [tableData, setTableData] = useState({
-    headers: [
-      "Entity",
-      "Department",
-      "B/L Type",
-      "Bill of landing no",
-      "Shipment No",
-      "Po Number",
-      "Client Po Number",
-      "Shipment Vol",
-      "Carrier",
-      "Customs House Agent",
-      "Currency",
-      "Deposited Amount",
-    ],
-  });
+  const [tableData, setTableData] = useState({});
 
   const [showModal, setShowModal] = useState(false);
   const [onDelete, setOnDelete] = useState(false);
@@ -190,6 +175,10 @@ const ContainerDeposits = () => {
       });
     }
   };
+  const handleReset = () => {
+    setLoading(!loading);
+    setFilterContainerData({ value: "", select: "" });
+  };
 
   const exportToCSV = () => {
     debugger;
@@ -212,17 +201,17 @@ const ContainerDeposits = () => {
         _id: _id,
         ...rest
       }) => ({
-        BillofLandingNumber,
+        Entity,
         BLType,
-        Carrier,
+        BillofLandingNumber,
         ClientPoNumber,
+        ShipmentVol,
+        Carrier,
+        DepositedAmount,
         Currency,
         CustomerHouseAgent,
-        DepositedAmount,
-        Entity,
         PoNumber,
         ShipmentNo,
-        ShipmentVol,
         ...rest,
       })
     );
@@ -470,10 +459,7 @@ const ContainerDeposits = () => {
               Search
             </Button>
             &nbsp;&nbsp;
-            <Button
-              variant="outline-success"
-              onClick={() => setLoading(!loading)}
-            >
+            <Button variant="outline-success" onClick={handleReset}>
               Reset
             </Button>
             <br></br>
