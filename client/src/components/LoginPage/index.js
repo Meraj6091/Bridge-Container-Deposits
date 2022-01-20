@@ -5,8 +5,7 @@ import { useStateValue } from "../../Helpers/Provider";
 import { actionTypes } from "../../Helpers/reducer";
 import NavBar from "../NavBar";
 import { login } from "./service";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
 const LoginPage = () => {
   const [loginData, setLoginData] = useState({});
   const [loggedIn, setLoggedIn] = useState();
@@ -22,9 +21,7 @@ const LoginPage = () => {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const resolveAfter3Sec = new Promise((resolve) =>
-      setTimeout(resolve, 3000)
-    );
+
     const { data } = await login(loginData);
 
     if (data.match) {
@@ -34,11 +31,7 @@ const LoginPage = () => {
           user: data.admin,
         });
       } else localStorage.removeItem("user");
-      toast.promise(resolveAfter3Sec, {
-        pending: "Please Wait",
-        success: "Logged In Successfully",
-        error: "Connection Time out",
-      });
+
       setLoggedIn(true);
       history.push("/containerDeposits");
     } else if (data.unMatch === true) {
@@ -65,7 +58,7 @@ const LoginPage = () => {
                 <Form.Control
                   type="text"
                   id="firstName"
-                  placeholder="Enter FirstName"
+                  placeholder="Enter First Name"
                   onChange={handleChange}
                   value={loginData.firstName}
                   required
@@ -99,17 +92,6 @@ const LoginPage = () => {
           </Col>
         </Row>
       </Container>
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
     </>
   );
 };

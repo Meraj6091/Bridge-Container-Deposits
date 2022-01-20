@@ -69,9 +69,11 @@ const ContainerDeposits = () => {
   };
 
   const handleFilterSelectChange = (event, id) => {
+    let findKey = filter.find((data) => data.label === event.value).key;
     setFilterContainerData({
       ...filterContainerData,
-      [id]: event.value,
+      [id]: findKey,
+      label: event.value,
     });
   };
 
@@ -451,10 +453,10 @@ const ContainerDeposits = () => {
           <Card.Body>
             <Row as={Col} md="4" style={{ left: 10 }}>
               <Select
-                value={getDefaultValueForSelect(filterContainerData.select)}
+                value={getDefaultValueForSelect(filterContainerData.label)}
                 options={filter.map((selector) => ({
-                  label: selector,
-                  value: selector,
+                  label: selector.label,
+                  value: selector.label,
                 }))}
                 onChange={(event) => handleFilterSelectChange(event, "select")}
               />

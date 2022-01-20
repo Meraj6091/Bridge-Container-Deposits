@@ -5,6 +5,8 @@ import NavBar from "../NavBar";
 import { createAccount, getAllUsers } from "./service";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { async } from "exceljs/dist/exceljs";
 
 const SignUp = () => {
@@ -61,7 +63,17 @@ const SignUp = () => {
       if (signUpData.password === signUpData.confirmPassword) {
         const { data } = await createAccount(signUpData);
         if (data) {
-          history.push("/");
+          // history.push("/");
+          toast.success("Created Successfully", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
         }
       } else {
         alert("Password is Wrong!");
@@ -193,12 +205,12 @@ const SignUp = () => {
                 Submit
               </Button>
               <br></br>
-              <span style={{ fontSize: 18 }}>
+              {/* <span style={{ fontSize: 18 }}>
                 If you already have an account
                 <Nav.Link style={{ display: "inline" }} href="/">
                   Login
                 </Nav.Link>
-              </span>
+              </span> */}
             </Form>
           </Col>
         </Row>
@@ -218,6 +230,17 @@ const SignUp = () => {
           Copyright © 2021 Bridge 2020. All Rights Reserved.
         </h6>
       </Container>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <br></br>
       <br></br>
     </>
