@@ -57,7 +57,7 @@ const LoginPage = () => {
                 <Form.Control
                   type="text"
                   id="firstName"
-                  placeholder="Enter FirstName"
+                  placeholder="First Name"
                   onChange={handleChange}
                   value={loginData.firstName}
                   required
