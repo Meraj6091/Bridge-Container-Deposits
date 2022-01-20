@@ -28,10 +28,15 @@ const SignUp = () => {
     ],
   });
   const [allUsers, setAllUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getAllRegisteredUsers();
   }, []);
+
+  useEffect(() => {
+    getAllRegisteredUsers();
+  }, [loading]);
 
   let formErrors = {};
 
@@ -74,6 +79,7 @@ const SignUp = () => {
             progress: undefined,
             theme: "dark",
           });
+          setLoading(!loading);
         }
       } else {
         alert("Password is Wrong!");
@@ -109,22 +115,23 @@ const SignUp = () => {
     // paginationTotalRenderer: customTotal,
     // disablePageTitle: true,
     sizePerPageList: [
-      // {
-      //   text: "5",
-      //   value: 5,
-      // },
-      // {
-      //   text: "10",
-      //   value: 10,
-      // },
-      // {
-      //   text: "All",
-      //   value: allUsers.length,
-      // },
+      {
+        text: "5",
+        value: 5,
+      },
+      {
+        text: "10",
+        value: 10,
+      },
+      {
+        text: "All",
+        value: allUsers.length,
+      },
     ], // A numeric array is also available. the purpose of above example is custom the text
   };
   const getAllRegisteredUsers = async () => {
     const { data } = await getAllUsers();
+    debugger;
     setAllUsers(data);
   };
   return (
