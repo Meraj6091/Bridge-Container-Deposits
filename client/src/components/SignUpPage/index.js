@@ -7,7 +7,6 @@ import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { async } from "exceljs/dist/exceljs";
 
 const SignUp = () => {
   const [signUpData, setSignUpData] = useState({
@@ -39,8 +38,6 @@ const SignUp = () => {
   }, [loading]);
 
   let formErrors = {};
-
-  let history = useHistory();
 
   const validation = async (values) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
