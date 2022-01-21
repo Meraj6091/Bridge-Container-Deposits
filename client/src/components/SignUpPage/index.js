@@ -29,9 +29,9 @@ const SignUp = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    getAllRegisteredUsers();
-  }, []);
+  // useEffect(() => {
+  //   getAllRegisteredUsers();
+  // }, []);
 
   useEffect(() => {
     getAllRegisteredUsers();

@@ -6,6 +6,7 @@ import {
   Form,
   FormControl,
   FormGroup,
+  InputGroup,
   Row,
   Modal,
   Table,
@@ -26,7 +27,7 @@ import { MdModeEditOutline } from "react-icons/md";
 import { AiFillDelete } from "react-icons/ai";
 import { getDefaultValueForSelect } from "../../Helpers/Select/defaultValue";
 import NavBar from "../NavBar/index";
-import { currencyCodes, filter, type } from "../../Helpers/currency";
+import { currencyCodes, filter, status, type } from "../../Helpers/currency";
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
 import * as ExcelJS from "exceljs/dist/exceljs";
@@ -35,12 +36,11 @@ import { excelColumns } from "../../Helpers/constants";
 import { RiFileExcel2Line } from "react-icons/ri";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ContainerDepositsRecovery from "./recovery";
 
 const ContainerDeposits = () => {
   const [containerData, setContainerData] = useState({});
   const [filterContainerData, setFilterContainerData] = useState({});
-  const [loggedIn, setLoggedIn] = useState();
-  const [show, setShow] = useState();
   const [onEdit, setonEdit] = useState(false);
   const [loading, setLoading] = useState(false);
   const [tableData, setTableData] = useState({});
@@ -101,6 +101,7 @@ const ContainerDeposits = () => {
         customerHouseAgent: "",
         depositedAmount: "",
       });
+      setonEdit(true);
     }
     setLoading(!loading);
     toast.success(
@@ -181,6 +182,7 @@ const ContainerDeposits = () => {
 
   const getData = async () => {
     const { data } = await getContainerDeposits(containerData);
+    debugger;
     if (data) {
       setTableData({
         ...tableData,
@@ -397,6 +399,26 @@ const ContainerDeposits = () => {
                     value={containerData.customerHouseAgent}
                   />
                 </Form.Group>
+                <Form.Group as={Col} md="4" controlId="ataDate">
+                  <Form.Label>ATA date</Form.Label>
+                  <Form.Control required type="date" placeholder="ATA date" />
+                </Form.Group>
+                <Form.Group as={Col} md="4" controlId="docReceivedDate">
+                  <Form.Label>Docs Received date</Form.Label>
+                  <Form.Control
+                    required
+                    type="date"
+                    placeholder="Docs Received  date"
+                  />
+                </Form.Group>
+                <Form.Group as={Col} md="4" controlId="docSubmittedDate">
+                  <Form.Label>Docs Submitted date</Form.Label>
+                  <Form.Control
+                    required
+                    type="date"
+                    placeholder="Docs Submitted  date"
+                  />
+                </Form.Group>
                 <Form.Group as={Col} md="4">
                   <Form.Label>Currency</Form.Label>
                   <Select
@@ -408,18 +430,52 @@ const ContainerDeposits = () => {
                     onChange={(event) => handleSelectChange(event, "currency")}
                   />
                 </Form.Group>
+                <Form.Group as={Col} md="4" controlId="refundAmount">
+                  <Form.Label> Deposit Amount</Form.Label>
+                  <InputGroup className="mb-3">
+                    <InputGroup.Prepend>
+                      <InputGroup.Text id="basic-addon1">
+                        {containerData.currency}
+                      </InputGroup.Text>
+                    </InputGroup.Prepend>
+                    <Form.Control
+                      //
+                      required
+                      placeholder="Refund Amount"
+                      type="number"
+                      pattern="^(\d+\.\d{1,6})$"
+                      // defaultValue={getUnitPriceValue(props.data.recoveredAmount)}
+                      // onChange={calculateUnrecoveredAmount}
+                    />
+                  </InputGroup>
+                </Form.Group>
                 <Form.Group as={Col} md="4">
-                  <Form.Label>Deposited Amount </Form.Label>
-                  <Form.Control
-                    required
-                    type="text"
-                    placeholder="Deposited Amount"
-                    id="depositedAmount"
-                    onChange={handleChange}
-                    value={containerData.depositedAmount}
+                  <Form.Label>Status</Form.Label>
+                  <Select
+                    value={getDefaultValueForSelect(containerData.status)}
+                    options={status.map((selector) => ({
+                      label: selector,
+                      value: selector,
+                    }))}
+                    onChange={(event) => handleSelectChange(event, "status")}
                   />
                 </Form.Group>
+                <Form.Group as={Col} md="4" controlId="remaks">
+                  <Form.Label>Remaks</Form.Label>
+                  <Form.Control required type="text" placeholder="Remaks" />
+                </Form.Group>
                 <br></br>
+                {onEdit && (
+                  <>
+                    <Card>
+                      <Card.Body>
+                        <ContainerDepositsRecovery
+                          value={containerData.currency}
+                        />
+                      </Card.Body>
+                    </Card>
+                  </>
+                )}
               </Row>
               <Row as={Col} md="6" style={{ left: 10 }}>
                 <Button
