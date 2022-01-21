@@ -476,6 +476,7 @@ const ContainerDeposits = () => {
                   </>
                 )}
               </Row>
+              <br></br>
               <Row as={Col} md="6" style={{ left: 10 }}>
                 <Button
                   variant="success btn-block"
