@@ -62,24 +62,28 @@ const SignUp = () => {
     await validation(signUpData);
 
     if (!formErrors.errors) {
-      if (signUpData.password === signUpData.confirmPassword) {
-        const { data } = await createAccount(signUpData);
-        if (data) {
-          // history.push("/");
-          toast.success("Created Successfully", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
-          setLoading(!loading);
-        }
+      if (allUsers?.some((data) => data.email === signUpData.email)) {
+        alert("Email Address already Exists");
       } else {
-        alert("Password is Wrong!");
+        if (signUpData.password === signUpData.confirmPassword) {
+          const { data } = await createAccount(signUpData);
+          if (data) {
+            // history.push("/");
+            toast.success("Created Successfully", {
+              position: "bottom-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+            });
+            setLoading(!loading);
+          }
+        } else {
+          alert("Password is Wrong!");
+        }
       }
     } else {
       alert("Invalid Email");
