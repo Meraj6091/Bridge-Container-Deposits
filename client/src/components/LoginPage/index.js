@@ -5,6 +5,8 @@ import { useStateValue } from "../../Helpers/Provider";
 import { actionTypes } from "../../Helpers/reducer";
 import NavBar from "../NavBar";
 import { login } from "./service";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const LoginPage = () => {
   const [loginData, setLoginData] = useState({});
@@ -35,8 +37,18 @@ const LoginPage = () => {
       setLoggedIn(true);
       history.push("/containerDeposits");
     } else if (data.unMatch === true) {
+      toast.error("Logging Details Are Wrong!", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
       setLoggedIn(false);
-      alert("Logging Details Are Wrong!");
+      // alert("Logging Details Are Wrong!");
     }
   };
   return (
@@ -92,6 +104,17 @@ const LoginPage = () => {
           </Col>
         </Row>
       </Container>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </>
   );
 };
