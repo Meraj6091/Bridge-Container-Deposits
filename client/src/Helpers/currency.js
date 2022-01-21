@@ -1,5 +1,7 @@
 export const type = ["MBL", "HBL"];
 
+export const status = ["Pending", "Approved"];
+
 export const filter = [
   {
     label: "Entity",
