@@ -192,7 +192,13 @@ router.post("/getContainerDepositsFilters", async (request, response) => {
   console.log(request);
   const getContainerDepositsFilters = await containerDepositsModel
     .find()
-    .where({ [request.body.select]: { $regex: `.*${request.body.value}.*` } });
+    .where({
+      [request.body.select]: {
+        $regex: `.*${request.body.value}.*`,
+        $options: "i", //for case sensitive
+      },
+    });
+
   try {
     if (getContainerDepositsFilters) {
       return response.json(getContainerDepositsFilters);
