@@ -32,6 +32,7 @@ import * as XLSX from "xlsx";
 import * as ExcelJS from "exceljs/dist/exceljs";
 import { saveAs } from "file-saver";
 import { excelColumns } from "../../Helpers/constants";
+import { RiFileExcel2Line } from "react-icons/ri";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -472,7 +473,7 @@ const ContainerDeposits = () => {
               />
               <Row as={Col} md="2" style={{ left: 10 }}>
                 <Button style={{ marginLeft: 350 }} onClick={exportToCSV}>
-                  Export{" "}
+                  <RiFileExcel2Line /> &nbsp;Export
                 </Button>
               </Row>
             </Row>
