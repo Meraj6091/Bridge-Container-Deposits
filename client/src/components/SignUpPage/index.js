@@ -63,7 +63,17 @@ const SignUp = () => {
 
     if (!formErrors.errors) {
       if (allUsers?.some((data) => data.email === signUpData.email)) {
-        alert("Email Address already Exists");
+        toast.warn("Email is already Exists!", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        // alert("Email Address already Exists");
       } else {
         if (signUpData.password === signUpData.confirmPassword) {
           const { data } = await createAccount(signUpData);
@@ -82,11 +92,31 @@ const SignUp = () => {
             setLoading(!loading);
           }
         } else {
-          alert("Password is Wrong!");
+          toast.warning("Password is Wrong!", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+          // alert("Password is Wrong!");
         }
       }
     } else {
-      alert("Invalid Email");
+      toast.warning("Invalid Email!", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      // alert("Invalid Email");
     }
   };
 
