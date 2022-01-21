@@ -410,7 +410,7 @@ const ContainerDeposits = () => {
                   />
                 </Form.Group>
                 <Form.Group as={Col} md="4" controlId="refundAmount">
-                  <Form.Label>Refund Amount</Form.Label>
+                  <Form.Label> Deposit Amount</Form.Label>
                   <InputGroup className="mb-3">
                     <InputGroup.Prepend>
                       <InputGroup.Text id="basic-addon1">
