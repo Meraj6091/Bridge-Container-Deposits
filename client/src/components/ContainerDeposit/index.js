@@ -398,6 +398,26 @@ const ContainerDeposits = () => {
                     value={containerData.customerHouseAgent}
                   />
                 </Form.Group>
+                <Form.Group as={Col} md="4" controlId="ataDate">
+                  <Form.Label>ATA date</Form.Label>
+                  <Form.Control required type="date" placeholder="ATA date" />
+                </Form.Group>
+                <Form.Group as={Col} md="4" controlId="docReceivedDate">
+                  <Form.Label>Docs Received date</Form.Label>
+                  <Form.Control
+                    required
+                    type="date"
+                    placeholder="Docs Received  date"
+                  />
+                </Form.Group>
+                <Form.Group as={Col} md="4" controlId="docSubmittedDate">
+                  <Form.Label>Docs Submitted date</Form.Label>
+                  <Form.Control
+                    required
+                    type="date"
+                    placeholder="Docs Submitted  date"
+                  />
+                </Form.Group>
                 <Form.Group as={Col} md="4">
                   <Form.Label>Currency</Form.Label>
                   <Select
@@ -439,14 +459,20 @@ const ContainerDeposits = () => {
                     onChange={(event) => handleSelectChange(event, "status")}
                   />
                 </Form.Group>
+                <Form.Group as={Col} md="4" controlId="remaks">
+                  <Form.Label>Remaks</Form.Label>
+                  <Form.Control required type="text" placeholder="Remaks" />
+                </Form.Group>
                 <br></br>
                 {onEdit && (
                   <>
-                    <Card.Body>
-                      <ContainerDepositsRecovery
-                        value={containerData.currency}
-                      />
-                    </Card.Body>
+                    <Card>
+                      <Card.Body>
+                        <ContainerDepositsRecovery
+                          value={containerData.currency}
+                        />
+                      </Card.Body>
+                    </Card>
                   </>
                 )}
               </Row>
