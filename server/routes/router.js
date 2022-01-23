@@ -194,7 +194,7 @@ router.post("/getContainerDepositsFilters", async (request, response) => {
     .find()
     .where({
       [request.body.select]: {
-        $regex: `.*${request.body.value}.*`,
+        $regex: `.*${request.body.value}.*`, //like query
         $options: "i", //for case sensitive
       },
     });
