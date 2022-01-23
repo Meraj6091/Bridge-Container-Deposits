@@ -91,16 +91,6 @@ const ContainerDeposits = () => {
       await updateContainerDeposits(containerData);
     } else {
       await saveContainerDeposits(containerData);
-      setContainerData({
-        poNo: "",
-        billOfLandingNo: "",
-        shipmentNo: "",
-        clientPoNo: "",
-        shipmentVol: "",
-        carrier: "",
-        customerHouseAgent: "",
-        depositedAmount: "",
-      });
       setonEdit(true);
     }
     setLoading(!loading);

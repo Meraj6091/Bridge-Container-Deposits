@@ -111,7 +111,6 @@ const ContainerDepositsRecovery = ({ value }) => {
                   placeholder="Un-Recovered Amount"
                   type="number"
                   pattern="^(\d+\.\d{1,6})$"
-                  // defaultValue={getUnitPriceValue(props.data.unRecoveredAmount)}
                   // onChange={props.onChange}
                 />
               </InputGroup>
