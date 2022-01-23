@@ -21,8 +21,8 @@ import {
 } from "./service/index";
 import { MdModeEditOutline } from "react-icons/md";
 import { AiFillDelete } from "react-icons/ai";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { openToast } from "../../Helpers/openToast";
+import { ToastContainer } from "react-toastify";
 
 function Importer() {
   let history = useHistory();
@@ -62,16 +62,7 @@ function Importer() {
 
     if (onEdit) {
       await updateImporter(importerData);
-      toast.success("Updated Successfully", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+      openToast("success", "Updated Successfully");
     } else {
       if (
         tableData.data?.some(
@@ -87,16 +78,7 @@ function Importer() {
           importerName: "",
           entity: "",
         });
-        toast.success("Created Successfully", {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
+        openToast("success", "Created Successfully");
       }
     }
     setLoading(!loading);
@@ -120,16 +102,7 @@ function Importer() {
     await deleteImporter(importerData);
     setShowModal(false);
     setLoading(!loading);
-    toast.success("Deleted Successfully", {
-      position: "bottom-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
+    openToast("success", "Deleted Successfully");
   };
   const getData = async () => {
     const { data } = await getImporter(importerData);

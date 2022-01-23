@@ -5,8 +5,9 @@ import NavBar from "../NavBar";
 import { createAccount, getAllUsers } from "./service";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { openToast } from "../../Helpers/openToast";
 
 const SignUp = () => {
   const [signUpData, setSignUpData] = useState({
@@ -63,59 +64,27 @@ const SignUp = () => {
 
     if (!formErrors.errors) {
       if (allUsers?.some((data) => data.email === signUpData.email)) {
-        toast.warn("Email is already Exists!", {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
+        openToast("warn", "Email is already Exists!");
+
         // alert("Email Address already Exists");
       } else {
         if (signUpData.password === signUpData.confirmPassword) {
           const { data } = await createAccount(signUpData);
           if (data) {
             // history.push("/");
-            toast.success("Created Successfully", {
-              position: "bottom-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "dark",
-            });
+            openToast("success", "Created Successfully");
+
             setLoading(!loading);
           }
         } else {
-          toast.warning("Password is Wrong!", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
+          openToast("warn", "Password is Wrong!");
+
           // alert("Password is Wrong!");
         }
       }
     } else {
-      toast.warning("Invalid Email!", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+      openToast("warn", "Invalid Email!");
+
       // alert("Invalid Email");
     }
   };

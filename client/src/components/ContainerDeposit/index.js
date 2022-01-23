@@ -28,16 +28,14 @@ import { AiFillDelete } from "react-icons/ai";
 import { getDefaultValueForSelect } from "../../Helpers/Select/defaultValue";
 import NavBar from "../NavBar/index";
 import { currencyCodes, filter, status, type } from "../../Helpers/currency";
-import * as FileSaver from "file-saver";
-import * as XLSX from "xlsx";
-import * as ExcelJS from "exceljs/dist/exceljs";
-import { saveAs } from "file-saver";
-import { excelColumns } from "../../Helpers/constants";
+
 import { RiFileExcel2Line } from "react-icons/ri";
-import { ToastContainer, toast } from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
 import ContainerDepositsRecovery from "./recovery";
-
+import { exportToExcel } from "../../Helpers/exportToExcel";
+import { openToast } from "../../Helpers/openToast";
+import { ToastContainer } from "react-toastify";
 const ContainerDeposits = () => {
   const [containerData, setContainerData] = useState({});
   const [filterContainerData, setFilterContainerData] = useState({});
@@ -94,18 +92,10 @@ const ContainerDeposits = () => {
       setonEdit(true);
     }
     setLoading(!loading);
-    toast.success(
-      `${onEdit ? "Updated Successfully" : "Created Successfully"}`,
-      {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      }
+
+    openToast(
+      "success",
+      onEdit ? "Updated Successfully" : "Created Successfully"
     );
   };
 
@@ -127,16 +117,7 @@ const ContainerDeposits = () => {
     await deleteContainerDeposits(containerData);
     setShowModal(false);
     setLoading(!loading);
-    toast.success("Deleted Successfully", {
-      position: "bottom-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
+    openToast("success", "Deleted Successfully");
   };
 
   const handleOnSearch = async (event) => {
@@ -231,38 +212,8 @@ const ContainerDeposits = () => {
         ...rest,
       })
     );
-    console.log(newArrayOfObj);
-    const fileType =
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
-    const fileExtension = ".xlsx";
-    const ws = XLSX.utils.json_to_sheet(newArrayOfObj);
-    const wscols = [
-      { wch: 20 },
-      { wch: 20 },
-      { wch: 20 },
-      { wch: 20 },
-      { wch: 20 },
-      { wch: 20 },
-      { wch: 20 },
-      { wch: 20 },
-      { wch: 20 },
-      { wch: 20 },
-      { wch: 20 },
-      { wch: 20 },
-      { wch: 20 },
-      { wch: 20 },
-      { wch: 20 },
-      { wch: 20 },
-      { wch: 20 },
-      { wch: 20 },
-      { wch: 20 },
-    ];
 
-    ws["!cols"] = wscols;
-    const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
-    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-    const data = new Blob([excelBuffer], { type: fileType });
-    FileSaver.saveAs(data, "Container Deposits" + fileExtension);
+    exportToExcel(newArrayOfObj, "Container Deposits");
   };
   return (
     <>

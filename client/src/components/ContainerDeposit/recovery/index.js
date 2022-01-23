@@ -13,9 +13,6 @@ import {
   Card,
 } from "react-bootstrap";
 
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
 const ContainerDepositsRecovery = ({ value }) => {
   const [containerData, setContainerData] = useState({});
   const [filterContainerData, setFilterContainerData] = useState({});
@@ -119,17 +116,6 @@ const ContainerDepositsRecovery = ({ value }) => {
           </Form.Row>
         </Form>
       </div>
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
     </>
   );
 };
