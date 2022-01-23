@@ -72,9 +72,8 @@ const SignUp = () => {
           const { data } = await createAccount(signUpData);
           if (data) {
             // history.push("/");
-            openToast("success", "Created Successfully");
-
             setLoading(!loading);
+            openToast("success", "Created Successfully");
           }
         } else {
           openToast("warn", "Password is Wrong!");
@@ -222,6 +221,7 @@ const SignUp = () => {
           </Col>
         </Row>
       </Container>
+      <br />
       <Container>
         <Card>
           <Card.Body>
