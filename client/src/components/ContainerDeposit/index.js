@@ -246,7 +246,6 @@ const ContainerDeposits = () => {
         ChequeNo,
         DeductAmount,
         Reason,
-
         ReceivedDate,
         RefundAmount,
         SettleDate,
