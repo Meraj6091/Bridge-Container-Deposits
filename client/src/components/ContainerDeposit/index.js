@@ -86,6 +86,7 @@ const ContainerDeposits = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (onEdit) {
+      debugger;
       await updateContainerDeposits(containerData);
     } else {
       await saveContainerDeposits(containerData);
@@ -342,7 +343,13 @@ const ContainerDeposits = () => {
                 </Form.Group>
                 <Form.Group as={Col} md="4" controlId="ataDate">
                   <Form.Label>ATA date</Form.Label>
-                  <Form.Control required type="date" placeholder="ATA date" />
+                  <Form.Control
+                    required
+                    type="date"
+                    placeholder="ATA date"
+                    onChange={handleChange}
+                    value={containerData.ataDate}
+                  />
                 </Form.Group>
                 <Form.Group as={Col} md="4" controlId="docReceivedDate">
                   <Form.Label>Docs Received date</Form.Label>
@@ -350,6 +357,8 @@ const ContainerDeposits = () => {
                     required
                     type="date"
                     placeholder="Docs Received  date"
+                    onChange={handleChange}
+                    value={containerData.docReceivedDate}
                   />
                 </Form.Group>
                 <Form.Group as={Col} md="4" controlId="docSubmittedDate">
@@ -358,6 +367,8 @@ const ContainerDeposits = () => {
                     required
                     type="date"
                     placeholder="Docs Submitted  date"
+                    onChange={handleChange}
+                    value={containerData.docSubmittedDate}
                   />
                 </Form.Group>
                 <Form.Group as={Col} md="4">
@@ -371,7 +382,7 @@ const ContainerDeposits = () => {
                     onChange={(event) => handleSelectChange(event, "currency")}
                   />
                 </Form.Group>
-                <Form.Group as={Col} md="4" controlId="refundAmount">
+                <Form.Group as={Col} md="4" controlId="depositAmount">
                   <Form.Label> Deposit Amount</Form.Label>
                   <InputGroup className="mb-3">
                     <InputGroup.Prepend>
@@ -382,11 +393,13 @@ const ContainerDeposits = () => {
                     <Form.Control
                       //
                       required
-                      placeholder="Refund Amount"
+                      placeholder="Deposit Amount"
                       type="number"
                       pattern="^(\d+\.\d{1,6})$"
                       // defaultValue={getUnitPriceValue(props.data.recoveredAmount)}
                       // onChange={calculateUnrecoveredAmount}
+                      onChange={handleChange}
+                      value={containerData.depositAmount}
                     />
                   </InputGroup>
                 </Form.Group>
@@ -401,9 +414,15 @@ const ContainerDeposits = () => {
                     onChange={(event) => handleSelectChange(event, "status")}
                   />
                 </Form.Group>
-                <Form.Group as={Col} md="4" controlId="remaks">
-                  <Form.Label>Remaks</Form.Label>
-                  <Form.Control required type="text" placeholder="Remaks" />
+                <Form.Group as={Col} md="4" controlId="remarks">
+                  <Form.Label>Remarks</Form.Label>
+                  <Form.Control
+                    required
+                    type="text"
+                    placeholder="Remarks"
+                    onChange={handleChange}
+                    value={containerData.remarks}
+                  />
                 </Form.Group>
                 <br></br>
                 {onEdit && (
@@ -412,6 +431,8 @@ const ContainerDeposits = () => {
                       <Card.Body>
                         <ContainerDepositsRecovery
                           value={containerData.currency}
+                          containerData={containerData}
+                          setContainerData={setContainerData}
                         />
                       </Card.Body>
                     </Card>

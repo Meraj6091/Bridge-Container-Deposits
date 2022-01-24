@@ -221,5 +221,5 @@ router.get("/getAllUsers", async (request, response) => {
     return response.json(err);
   }
 });
-//dwdwd
+
 module.exports = router;

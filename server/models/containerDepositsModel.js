@@ -37,6 +37,46 @@ const containerDeposits = new mongoose.Schema({
   depositedAmount: {
     type: String,
   },
+  ataDate: {
+    type: Date,
+  },
+  docReceivedDate: {
+    type: Date,
+  },
+  docSubmittedDate: {
+    type: Date,
+  },
+  depositedAmount: {
+    type: Date,
+  },
+  status: {
+    type: String,
+  },
+  remarks: {
+    type: String,
+  },
+  //recovery details
+  chequeNo: {
+    type: Number,
+  },
+  receivedDate: {
+    type: Date,
+  },
+  refundAmount: {
+    type: Number,
+  },
+  deductAmount: {
+    type: Number,
+  },
+  reason: {
+    type: String,
+  },
+  settleDate: {
+    type: Date,
+  },
+  unRecoveredAmount: {
+    type: Date,
+  },
 });
 
 module.exports = mongoose.model("containerDeposits", containerDeposits);
