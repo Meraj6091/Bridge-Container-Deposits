@@ -496,7 +496,7 @@ const ContainerDeposits = () => {
                   {onEdit ? "Update" : "Submit"}
                 </Button>
                 &nbsp;
-                {onEdit && containerData.uuid && (
+                {onEdit && (
                   <div style={{ paddingLeft: 10 }}>
                     <Button
                       variant="success btn-block"

@@ -71,7 +71,9 @@ function Importer() {
             data.entity === importerData.entity
         )
       ) {
-        alert("There Cant be same Entities for Same Importer Name");
+        openToast("warn", "There Cant be same Entities for Same Importer Name");
+
+        // alert("There Cant be same Entities for Same Importer Name");
       } else {
         await importer(importerData);
         setImporterData({
