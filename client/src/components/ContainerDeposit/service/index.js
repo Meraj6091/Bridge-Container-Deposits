@@ -10,7 +10,12 @@ export const getContainerDeposits = (data) => {
 };
 
 export const updateContainerDeposits = (data) => {
-  return axios.put(`${apiEndPoint()}/app/updateContainerDeposits`, data);
+  debugger;
+  let postData = data;
+  if (data._id) {
+    postData.uuid = data._id;
+  }
+  return axios.put(`${apiEndPoint()}/app/updateContainerDeposits`, postData);
 };
 export const deleteContainerDeposits = (data) => {
   return axios.post(`${apiEndPoint()}/app/deleteContainerDeposits`, data);

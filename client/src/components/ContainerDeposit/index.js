@@ -85,11 +85,30 @@ const ContainerDeposits = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     if (onEdit) {
-      debugger;
-      await updateContainerDeposits(containerData);
+      let postData = containerData;
+      if (
+        containerData.depositedAmount &&
+        containerData.refundAmount &&
+        containerData.deductAmount
+      ) {
+        let unRecoveredAmount =
+          containerData.depositedAmount +
+          containerData.refundAmount -
+          containerData.deductAmount;
+        postData.unRecoveredAmount = unRecoveredAmount;
+      }
+      await updateContainerDeposits(postData);
     } else {
-      await saveContainerDeposits(containerData);
+      const { data } = await saveContainerDeposits(containerData);
+      if (data._id) {
+        setContainerData({
+          ...containerData,
+          uuid: data._id,
+        });
+      }
+
       setonEdit(true);
     }
     setLoading(!loading);
@@ -154,7 +173,7 @@ const ContainerDeposits = () => {
 
   const getData = async () => {
     const { data } = await getContainerDeposits(containerData);
-    debugger;
+
     if (data) {
       setTableData({
         ...tableData,
@@ -382,7 +401,7 @@ const ContainerDeposits = () => {
                     onChange={(event) => handleSelectChange(event, "currency")}
                   />
                 </Form.Group>
-                <Form.Group as={Col} md="4" controlId="depositAmount">
+                <Form.Group as={Col} md="4" controlId="depositedAmount">
                   <Form.Label> Deposit Amount</Form.Label>
                   <InputGroup className="mb-3">
                     <InputGroup.Prepend>
@@ -399,7 +418,7 @@ const ContainerDeposits = () => {
                       // defaultValue={getUnitPriceValue(props.data.recoveredAmount)}
                       // onChange={calculateUnrecoveredAmount}
                       onChange={handleChange}
-                      value={containerData.depositAmount}
+                      value={containerData.depositedAmount}
                     />
                   </InputGroup>
                 </Form.Group>
@@ -430,6 +449,7 @@ const ContainerDeposits = () => {
                     <Card>
                       <Card.Body>
                         <ContainerDepositsRecovery
+                          depositedAmount={containerData.depositedAmount}
                           value={containerData.currency}
                           containerData={containerData}
                           setContainerData={setContainerData}
@@ -449,7 +469,7 @@ const ContainerDeposits = () => {
                   {onEdit ? "Update" : "Submit"}
                 </Button>
                 &nbsp;
-                {onEdit && (
+                {onEdit && containerData.uuid && (
                   <div style={{ paddingLeft: 10 }}>
                     <Button
                       variant="success btn-block"
@@ -523,6 +543,7 @@ const ContainerDeposits = () => {
 
                   {/* <th>Currency</th> */}
                   <th>Deposited Amount </th>
+                  <th>Status</th>
                   <th>Action </th>
                 </tr>
               </thead>
@@ -543,6 +564,7 @@ const ContainerDeposits = () => {
                       {/* <td>{data.customerHouseAgent}</td> */}
                       {/* <td>{data.currency}</td> */}
                       <td>{data.depositedAmount}</td>
+                      <td>{data.status}</td>
                       <td>
                         {
                           <MdModeEditOutline

@@ -35,20 +35,18 @@ const containerDeposits = new mongoose.Schema({
     type: String,
   },
   depositedAmount: {
-    type: String,
+    type: Number,
   },
   ataDate: {
-    type: Date,
+    type: String,
   },
   docReceivedDate: {
-    type: Date,
+    type: String,
   },
   docSubmittedDate: {
-    type: Date,
+    type: String,
   },
-  depositedAmount: {
-    type: Date,
-  },
+
   status: {
     type: String,
   },
@@ -60,7 +58,7 @@ const containerDeposits = new mongoose.Schema({
     type: Number,
   },
   receivedDate: {
-    type: Date,
+    type: String,
   },
   refundAmount: {
     type: Number,
@@ -72,10 +70,10 @@ const containerDeposits = new mongoose.Schema({
     type: String,
   },
   settleDate: {
-    type: Date,
+    type: String,
   },
   unRecoveredAmount: {
-    type: Date,
+    type: String,
   },
 });
 

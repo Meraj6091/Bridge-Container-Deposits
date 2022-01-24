@@ -17,6 +17,7 @@ const ContainerDepositsRecovery = ({
   value,
   containerData,
   setContainerData,
+  depositedAmount,
 }) => {
   const [filterContainerData, setFilterContainerData] = useState({});
   const [onEdit, setonEdit] = useState(false);

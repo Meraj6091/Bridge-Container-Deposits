@@ -145,11 +145,11 @@ router.get("/getContainerDeposits", async (request, response) => {
 });
 
 router.put("/updateContainerDeposits", async (request, response) => {
-  console.log(request.body._id);
+  console.log(request.body);
   try {
     const updateContainerDeposits = await containerDepositsModel
       .updateOne(request.body)
-      .where({ _id: request.body._id });
+      .where({ _id: request.body.uuid });
     if (updateContainerDeposits) {
       return response.json(updateContainerDeposits);
     }
