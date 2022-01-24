@@ -93,11 +93,13 @@ const ContainerDeposits = () => {
         containerData.refundAmount &&
         containerData.deductAmount
       ) {
+        debugger;
         let unRecoveredAmount =
-          containerData.depositedAmount +
-          containerData.refundAmount -
-          containerData.deductAmount;
+          parseInt(containerData.depositedAmount) +
+          parseInt(containerData.refundAmount) -
+          parseInt(containerData.deductAmount);
         postData.unRecoveredAmount = unRecoveredAmount;
+        console.log(unRecoveredAmount);
       }
       await updateContainerDeposits(postData);
     } else {
