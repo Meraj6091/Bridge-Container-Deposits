@@ -28,6 +28,8 @@ router.post("/login", async (request, response) => {
     admin: "",
     match: "",
     unMatch: "",
+    firstName: "",
+    password: "",
   };
   try {
     if (findAllSignUpData) {
@@ -53,6 +55,8 @@ router.post("/login", async (request, response) => {
       );
       if (isEqual) {
         obj.match = true;
+        obj.firstName = request.body.firstName;
+        obj.password = request.body.password;
       } else {
         obj.unMatch = true;
       }
@@ -67,6 +71,7 @@ router.post("/importer", (request, response) => {
   const importer = new importerTemplate({
     importerName: request.body.importerName,
     entity: request.body.entity,
+    createdBy: request.body.createdBy,
   });
   importer
     .save()
@@ -94,6 +99,8 @@ router.put("/updateImporter", async (request, response) => {
       .updateOne({
         importerName: request.body.importerName,
         entity: request.body.entity,
+        updatedBy: request.body.updatedBy,
+        updatedDate: request.body.updatedDate,
       })
       .where({ _id: request.body._id });
     if (importer) {
@@ -104,12 +111,15 @@ router.put("/updateImporter", async (request, response) => {
   }
 });
 
-router.post("/deleteImporter", async (request, response) => {
+router.put("/deleteImporter", async (request, response) => {
   console.log("meraj");
   console.log(request);
   try {
     const importer = await importerTemplate
-      .deleteOne()
+      .updateOne({
+        isDeleted: true,
+        deletedBy: request.body.deletedBy,
+      })
       .where({ _id: request.body.id });
     if (importer) {
       return response.json(importer);
@@ -158,12 +168,15 @@ router.put("/updateContainerDeposits", async (request, response) => {
   }
 });
 
-router.post("/deleteContainerDeposits", async (request, response) => {
+router.put("/deleteContainerDeposits", async (request, response) => {
   console.log("meraj");
   console.log(request);
   try {
     const deleteContainerDeposits = await containerDepositsModel
-      .deleteOne()
+      .updateOne({
+        isDeleted: true,
+        deletedBy: request.body.deletedBy,
+      })
       .where({ _id: request.body.id });
     if (deleteContainerDeposits) {
       return response.json(deleteContainerDeposits);
@@ -219,6 +232,25 @@ router.get("/getAllUsers", async (request, response) => {
     }
   } catch (err) {
     return response.json(err);
+  }
+});
+
+//change Password
+router.put("/changePasscode", async (request, response) => {
+  console.log(request.body);
+  try {
+    const changePassword = await signUpTemplate
+      .updateOne({
+        password: request.body.newPassword,
+        updatedBy: request.body.currentUser,
+        updatedDate: request.body.updatedDate,
+      })
+      .where({ firstName: request.body.currentUser });
+    if (changePassword) {
+      return response.json(changePassword);
+    }
+  } catch (e) {
+    response.json(e);
   }
 });
 

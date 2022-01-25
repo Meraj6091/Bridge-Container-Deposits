@@ -4,11 +4,11 @@ import { Link, useHistory } from "react-router-dom";
 import { useStateValue } from "../../Helpers/Provider";
 import { actionTypes } from "../../Helpers/reducer";
 import NavBar from "../NavBar";
-import { login } from "./service";
+import { changeLogin } from "./service";
 import { ToastContainer } from "react-toastify";
 import { openToast } from "../../Helpers/openToast";
 
-const LoginPage = () => {
+const ChangePassword = () => {
   const [loginData, setLoginData] = useState({});
   const [loggedIn, setLoggedIn] = useState();
   const [show, setShow] = useState();
@@ -23,33 +23,27 @@ const LoginPage = () => {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const { data } = await login(loginData);
-
-    if (data.match) {
-      debugger;
-      if (data.admin) {
-        dispatch({
-          type: actionTypes.SET_USER,
-          user: data.admin,
-        });
-      } else localStorage.removeItem("user");
-      localStorage.setItem("currentLoggedInUser", data.firstName);
-      localStorage.setItem("currentLoggedInUserPassword", data.password);
-      setLoggedIn(true);
-      history.push("/containerDeposits");
-    } else if (data.unMatch === true) {
-      openToast("error", "Logging Details Are Wrong!");
-
-      setLoggedIn(false);
-      // alert("Logging Details Are Wrong!");
-    }
+    const currentUser = localStorage.getItem("currentLoggedInUser");
+    const currentUserPassword = localStorage.getItem(
+      "currentLoggedInUserPassword"
+    );
+    if (loginData.currentPassword === currentUserPassword) {
+      const date = new Date();
+      let postData = loginData;
+      postData.updatedDate = date;
+      postData.currentUser = currentUser;
+      const { data } = await changeLogin(postData);
+      if (data) {
+        openToast("success", "Password Has been Changed");
+      }
+    } else openToast("warn", "Please Check the Password Again!");
   };
   return (
     <>
+      <NavBar />
       <Container>
         <h1 className="shadow-sm text-success mt-5 p-3 text-center rounded">
-          Login
+          Change Password
         </h1>
         <Row className="mt-5">
           <Col
@@ -60,40 +54,33 @@ const LoginPage = () => {
           >
             <Form onSubmit={handleSubmit}>
               <Form.Group>
-                <Form.Label>First Name</Form.Label>
+                <Form.Label>Current Password</Form.Label>
                 <Form.Control
-                  type="text"
-                  id="firstName"
-                  placeholder="Enter First Name"
+                  type="password"
+                  placeholder="Current Password"
+                  id="currentPassword"
                   onChange={handleChange}
-                  value={loginData.firstName}
+                  value={loginData.currentPassword}
                   required
                 />
               </Form.Group>
 
               <Form.Group>
-                <Form.Label>Password</Form.Label>
+                <Form.Label>New Password</Form.Label>
                 <Form.Control
                   type="password"
-                  placeholder="Password"
-                  id="password"
+                  placeholder="New Password"
+                  id="newPassword"
                   onChange={handleChange}
-                  value={loginData.password}
+                  value={loginData.newPassword}
                   required
                 />
               </Form.Group>
 
               <Button variant="success btn-block" type="submit" value="submit">
-                Login
+                Submit
               </Button>
               <br />
-
-              {/* <Button
-                variant="success btn-block"
-                onClick={() => history.push("/")}
-              >
-                Back to Sign Up
-              </Button> */}
             </Form>
           </Col>
         </Row>
@@ -113,4 +100,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default ChangePassword;

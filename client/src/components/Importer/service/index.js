@@ -12,5 +12,5 @@ export const updateImporter = (data) => {
   return axios.put(`${apiEndPoint()}/app/updateImporter`, data);
 };
 export const deleteImporter = (data) => {
-  return axios.post(`${apiEndPoint()}/app/deleteImporter`, data);
+  return axios.put(`${apiEndPoint()}/app/deleteImporter`, data);
 };

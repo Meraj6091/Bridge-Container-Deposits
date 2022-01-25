@@ -59,7 +59,7 @@ const NavBar = () => {
             {(getUser || user) && (
               <Nav.Link href="/signup">Create User &nbsp;</Nav.Link>
             )}
-
+            <Nav.Link href="/changePassword">Change Password</Nav.Link>
             <Nav.Link
               onClick={() => setShowModal(true)}
               style={{ paddingLeft: 80 }}

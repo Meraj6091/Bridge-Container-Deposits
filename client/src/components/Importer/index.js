@@ -21,6 +21,7 @@ import {
 } from "./service/index";
 import { MdModeEditOutline } from "react-icons/md";
 import { AiFillDelete } from "react-icons/ai";
+import { FcDeleteDatabase } from "react-icons/fc";
 import { openToast } from "../../Helpers/openToast";
 import { ToastContainer } from "react-toastify";
 
@@ -34,6 +35,7 @@ function Importer() {
   const [showModal, setShowModal] = useState(false);
   const [onDelete, setOnDelete] = useState(false);
   const handleClose = () => setShowModal(false);
+  const currentUser = localStorage.getItem("currentLoggedInUser");
 
   useEffect(() => {
     getData();
@@ -60,12 +62,20 @@ function Importer() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    let postData = importerData;
     if (onEdit) {
-      await updateImporter(importerData);
+      const date = new Date();
+      postData.updatedBy = currentUser;
+      postData.updatedDate = date;
+      await updateImporter(postData);
       openToast("success", "Updated Successfully");
     } else {
+      let filteredArr = tableData.data?.filter(function (el) {
+        return el.isDeleted === false;
+      });
+
       if (
-        tableData.data?.some(
+        filteredArr.some(
           (data) =>
             data.importerName === importerData.importerName &&
             data.entity === importerData.entity
@@ -75,7 +85,8 @@ function Importer() {
 
         // alert("There Cant be same Entities for Same Importer Name");
       } else {
-        await importer(importerData);
+        postData.createdBy = currentUser;
+        await importer(postData);
         setImporterData({
           importerName: "",
           entity: "",
@@ -101,14 +112,21 @@ function Importer() {
     setShowModal(true);
   };
   const handleOnDelete = async () => {
-    await deleteImporter(importerData);
+    let postData = importerData;
+    postData.deletedBy = currentUser;
+    await deleteImporter(postData);
     setShowModal(false);
     setLoading(!loading);
+    setImporterData({
+      importerName: "",
+      entity: "",
+    });
     openToast("success", "Deleted Successfully");
   };
   const getData = async () => {
     const { data } = await getImporter(importerData);
     if (data) {
+      debugger;
       setTableData({
         ...tableData,
         data,
@@ -198,31 +216,48 @@ function Importer() {
                 <tbody>
                   {tableData.data &&
                     tableData.data.map((data, key) => (
-                      <tr>
+                      <tr
+                      // style={
+                      //   data.isDeleted ? { backgroundColor: "lightGray" } : {}
+                      // }
+                      >
                         <td>{key}</td>
                         <td>{data.importerName}</td>
                         <td>{data.entity}</td>
-                        <td>
-                          {
-                            <MdModeEditOutline
-                              data-toggle="tooltip"
-                              data-placement="bottom"
-                              title="Edit"
-                              color="blue"
-                              onClick={() => handleOnEdit(data)}
-                            />
-                          }
-                          &nbsp; &nbsp; &nbsp;
-                          {
-                            <AiFillDelete
-                              data-toggle="tooltip"
-                              data-placement="bottom"
-                              title="Delete"
-                              color="red"
-                              onClick={() => setDataByOnDelete(data)}
-                            />
-                          }
-                        </td>
+                        {data.isDeleted === false ? (
+                          <td>
+                            {
+                              <MdModeEditOutline
+                                data-toggle="tooltip"
+                                data-placement="bottom"
+                                title="Edit"
+                                color="blue"
+                                onClick={() => handleOnEdit(data)}
+                              />
+                            }
+                            &nbsp; &nbsp; &nbsp;
+                            {
+                              <AiFillDelete
+                                data-toggle="tooltip"
+                                data-placement="bottom"
+                                title="Delete"
+                                color="red"
+                                onClick={() => setDataByOnDelete(data)}
+                              />
+                            }
+                          </td>
+                        ) : (
+                          <td>
+                            {
+                              <FcDeleteDatabase
+                                data-toggle="tooltip"
+                                data-placement="bottom"
+                                title="Deleted"
+                                color="red"
+                              />
+                            }
+                          </td>
+                        )}
                       </tr>
                     ))}
                 </tbody>

@@ -8,6 +8,26 @@ const importerTemplate = new mongoose.Schema({
   entity: {
     type: String,
   },
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  },
+  createdBy: {
+    type: String,
+  },
+  updatedBy: {
+    type: String,
+  },
+  deletedBy: {
+    type: String,
+  },
+  createdDate: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedDate: {
+    type: Date,
+  },
 });
 
 module.exports = mongoose.model("importer", importerTemplate);

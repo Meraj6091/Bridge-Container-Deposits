@@ -36,6 +36,8 @@ import ContainerDepositsRecovery from "./recovery";
 import { exportToExcel } from "../../Helpers/exportToExcel";
 import { openToast } from "../../Helpers/openToast";
 import { ToastContainer } from "react-toastify";
+import { FcDeleteDatabase } from "react-icons/fc";
+
 const ContainerDeposits = () => {
   const [containerData, setContainerData] = useState({});
   const [filterContainerData, setFilterContainerData] = useState({});
@@ -47,7 +49,7 @@ const ContainerDeposits = () => {
   const [onDelete, setOnDelete] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
-
+  const currentUser = localStorage.getItem("currentLoggedInUser");
   useEffect(() => {
     getData();
     loadEntities();
@@ -86,8 +88,12 @@ const ContainerDeposits = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    let postData = containerData;
+
     if (onEdit) {
-      let postData = containerData;
+      const date = new Date();
+      postData.updatedBy = currentUser;
+      postData.updatedDate = date;
       if (
         containerData.depositedAmount &&
         containerData.refundAmount &&
@@ -103,7 +109,8 @@ const ContainerDeposits = () => {
       }
       await updateContainerDeposits(postData);
     } else {
-      const { data } = await saveContainerDeposits(containerData);
+      postData.createdBy = currentUser;
+      const { data } = await saveContainerDeposits(postData);
       if (data._id) {
         setContainerData({
           ...containerData,
@@ -136,7 +143,9 @@ const ContainerDeposits = () => {
     setShowModal(true);
   };
   const handleOnDelete = async () => {
-    await deleteContainerDeposits(containerData);
+    const postData = containerData;
+    postData.deletedBy = currentUser;
+    await deleteContainerDeposits(postData);
     setShowModal(false);
     setLoading(!loading);
     openToast("success", "Deleted Successfully");
@@ -591,27 +600,40 @@ const ContainerDeposits = () => {
                       {/* <td>{data.currency}</td> */}
                       <td>{data.depositedAmount}</td>
                       <td>{data.status}</td>
-                      <td>
-                        {
-                          <MdModeEditOutline
-                            data-toggle="tooltip"
-                            data-placement="bottom"
-                            title="Edit"
-                            color="blue"
-                            onClick={() => handleOnEdit(data)}
-                          />
-                        }
-                        &nbsp; &nbsp; &nbsp;
-                        {
-                          <AiFillDelete
-                            data-toggle="tooltip"
-                            data-placement="bottom"
-                            title="Delete"
-                            color="red"
-                            onClick={() => setDataByOnDelete(data)}
-                          />
-                        }
-                      </td>
+                      {data.isDeleted === false ? (
+                        <td>
+                          {
+                            <MdModeEditOutline
+                              data-toggle="tooltip"
+                              data-placement="bottom"
+                              title="Edit"
+                              color="blue"
+                              onClick={() => handleOnEdit(data)}
+                            />
+                          }
+                          &nbsp; &nbsp; &nbsp;
+                          {
+                            <AiFillDelete
+                              data-toggle="tooltip"
+                              data-placement="bottom"
+                              title="Delete"
+                              color="red"
+                              onClick={() => setDataByOnDelete(data)}
+                            />
+                          }
+                        </td>
+                      ) : (
+                        <td>
+                          {
+                            <FcDeleteDatabase
+                              data-toggle="tooltip"
+                              data-placement="bottom"
+                              title="Deleted"
+                              color="red"
+                            />
+                          }
+                        </td>
+                      )}
                     </tr>
                   ))}
                 {filteredProducts.map((value, index) => {

@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import ContainerDeposits from "./components/ContainerDeposit";
 import Entity from "./components/Entity";
 import Importer from "./components/Importer";
+import ChangePassword from "./components/ChangePassword";
 
 function App() {
   return (
@@ -27,6 +28,9 @@ function App() {
           </Route>
           <Route path="/importer">
             <Importer />
+          </Route>
+          <Route path="/changePassword">
+            <ChangePassword />
           </Route>
         </Switch>
       </Router>
