@@ -141,7 +141,9 @@ router.post("/containerDeposits", (request, response) => {
 });
 
 router.get("/getContainerDeposits", async (request, response) => {
-  const getContainerDeposits = await containerDepositsModel.find({});
+  const getContainerDeposits = await containerDepositsModel
+    .find({})
+    .sort({ createdDate: -1 });
   try {
     if (getContainerDeposits) {
       return response.json(getContainerDeposits);

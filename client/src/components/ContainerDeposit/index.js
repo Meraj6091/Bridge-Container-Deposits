@@ -89,42 +89,45 @@ const ContainerDeposits = () => {
     event.preventDefault();
 
     let postData = containerData;
+    try {
+      if (onEdit) {
+        const date = new Date();
+        postData.updatedBy = currentUser;
+        postData.updatedDate = date;
+        if (
+          containerData.depositedAmount &&
+          containerData.refundAmount &&
+          containerData.deductAmount
+        ) {
+          let unRecoveredAmount =
+            parseInt(containerData.depositedAmount) +
+            parseInt(containerData.refundAmount) -
+            parseInt(containerData.deductAmount);
+          postData.unRecoveredAmount = unRecoveredAmount;
+          console.log(unRecoveredAmount);
+        }
+        await updateContainerDeposits(postData);
+      } else {
+        postData.createdBy = currentUser;
+        const { data } = await saveContainerDeposits(postData);
+        if (data._id) {
+          setContainerData({
+            ...containerData,
+            uuid: data._id,
+          });
+        }
 
-    if (onEdit) {
-      const date = new Date();
-      postData.updatedBy = currentUser;
-      postData.updatedDate = date;
-      if (
-        containerData.depositedAmount &&
-        containerData.refundAmount &&
-        containerData.deductAmount
-      ) {
-        let unRecoveredAmount =
-          parseInt(containerData.depositedAmount) +
-          parseInt(containerData.refundAmount) -
-          parseInt(containerData.deductAmount);
-        postData.unRecoveredAmount = unRecoveredAmount;
-        console.log(unRecoveredAmount);
+        setonEdit(true);
       }
-      await updateContainerDeposits(postData);
-    } else {
-      postData.createdBy = currentUser;
-      const { data } = await saveContainerDeposits(postData);
-      if (data._id) {
-        setContainerData({
-          ...containerData,
-          uuid: data._id,
-        });
-      }
+      setLoading(!loading);
 
-      setonEdit(true);
+      openToast(
+        "success",
+        onEdit ? "Updated Successfully" : "Created Successfully"
+      );
+    } catch (e) {
+      console.log(e);
     }
-    setLoading(!loading);
-
-    openToast(
-      "success",
-      onEdit ? "Updated Successfully" : "Created Successfully"
-    );
   };
 
   const handleOnEdit = (data) => {
