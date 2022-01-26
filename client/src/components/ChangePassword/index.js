@@ -34,7 +34,12 @@ const ChangePassword = () => {
       postData.currentUser = currentUser;
       const { data } = await changeLogin(postData);
       if (data) {
+        localStorage.setItem("currentLoggedInUserPassword", data.password);
         openToast("success", "Password Has been Changed");
+        setLoginData({
+          currentPassword: "",
+          newPassword: "",
+        });
       }
     } else openToast("warn", "Please Check the Password Again!");
   };

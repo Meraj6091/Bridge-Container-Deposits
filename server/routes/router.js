@@ -33,10 +33,7 @@ router.post("/login", async (request, response) => {
   };
   try {
     if (findAllSignUpData) {
-      if (
-        request.body.firstName === "Admin" &&
-        request.body.password === "123"
-      ) {
+      if (request.body.firstName === "Admin") {
         const isAdmin = findAllSignUpData.some(
           (data) =>
             data.firstName === request.body.firstName &&
@@ -240,7 +237,7 @@ router.put("/changePasscode", async (request, response) => {
   console.log(request.body);
   try {
     const changePassword = await signUpTemplate
-      .updateOne({
+      .findOneAndUpdate({
         password: request.body.newPassword,
         updatedBy: request.body.currentUser,
         updatedDate: request.body.updatedDate,
