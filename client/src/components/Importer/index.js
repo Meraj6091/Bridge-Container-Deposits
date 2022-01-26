@@ -115,6 +115,7 @@ function Importer() {
       ...data,
     });
     setonEdit(true);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const setDataByOnDelete = (data) => {
