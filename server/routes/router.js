@@ -237,14 +237,22 @@ router.put("/changePasscode", async (request, response) => {
   console.log(request.body);
   try {
     const changePassword = await signUpTemplate
-      .findOneAndUpdate({
+      .updateOne({
         password: request.body.newPassword,
         updatedBy: request.body.currentUser,
         updatedDate: request.body.updatedDate,
       })
       .where({ firstName: request.body.currentUser });
     if (changePassword) {
-      return response.json(changePassword);
+      const getLatestUserDetails = await signUpTemplate
+        .find({})
+        .select("password")
+        .where({ firstName: request.body.currentUser });
+      if (getLatestUserDetails) {
+        console.log("meraj");
+        console.log(getLatestUserDetails);
+        return response.json(getLatestUserDetails);
+      }
     }
   } catch (e) {
     response.json(e);

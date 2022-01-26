@@ -32,9 +32,10 @@ const NavBar = () => {
     history.push("/");
   };
 
-  if (user) {
-    localStorage.setItem("user", user);
-  }
+  // if (user) {
+  //   debugger;
+  //   localStorage.user = user;
+  // }
 
   useEffect(() => {
     setGetUser(localStorage.getItem("user"));
@@ -56,9 +57,7 @@ const NavBar = () => {
             {/* <Nav.Link href="#home">Home</Nav.Link> */}
             <Nav.Link href="/containerDeposits">Container Deposits</Nav.Link>
             <Nav.Link href="/importer">Importer</Nav.Link>
-            {(getUser || user) && (
-              <Nav.Link href="/signup">Create User &nbsp;</Nav.Link>
-            )}
+            {getUser && <Nav.Link href="/signup">Create User &nbsp;</Nav.Link>}
             <Nav.Link href="/changePassword">Change Password</Nav.Link>
             <Nav.Link
               onClick={() => setShowModal(true)}

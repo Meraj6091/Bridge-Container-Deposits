@@ -27,13 +27,15 @@ const LoginPage = () => {
     const { data } = await login(loginData);
 
     if (data.match) {
-      debugger;
-      if (data.admin) {
-        dispatch({
-          type: actionTypes.SET_USER,
-          user: data.admin,
-        });
-      } else localStorage.removeItem("user");
+      if (data.admin === true) {
+        // dispatch({
+        //   type: actionTypes.SET_USER,
+        //   user: data.admin,
+        // });
+        localStorage.setItem("user", data.admin);
+      } else {
+        localStorage.removeItem("user");
+      }
       localStorage.setItem("currentLoggedInUser", data.firstName);
       localStorage.setItem("currentLoggedInUserPassword", data.password);
       setLoggedIn(true);
