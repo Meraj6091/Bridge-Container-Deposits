@@ -80,7 +80,7 @@ router.post("/importer", (request, response) => {
     });
 });
 router.get("/getImporter", async (request, response) => {
-  const importer = await importerTemplate.find({});
+  const importer = await importerTemplate.find({}).sort({ createdDate: -1 });
   try {
     if (importer) {
       return response.json(importer);
