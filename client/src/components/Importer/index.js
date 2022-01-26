@@ -35,6 +35,8 @@ function Importer() {
   const [showModal, setShowModal] = useState(false);
   const [onDelete, setOnDelete] = useState(false);
   const handleClose = () => setShowModal(false);
+  const [validated, setValidated] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const currentUser = localStorage.getItem("currentLoggedInUser");
 
   useEffect(() => {
@@ -60,6 +62,15 @@ function Importer() {
     });
   };
   const handleSubmit = async (event) => {
+    setSubmitted(true);
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+      setValidated(true);
+      setSubmitted(false);
+      return;
+    }
     event.preventDefault();
 
     let postData = importerData;
@@ -94,6 +105,8 @@ function Importer() {
         openToast("success", "Created Successfully");
       }
     }
+    setSubmitted(false);
+    setValidated(false);
     setLoading(!loading);
   };
 
@@ -144,7 +157,12 @@ function Importer() {
         </h1>
 
         <div>
-          <Form onSubmit={handleSubmit}>
+          <Form
+            noValidate
+            validated={validated}
+            onSubmit={handleSubmit}
+            autoComplete="off"
+          >
             <FormGroup controlId="Importer Name">
               <Col sm={5}>Importer Name</Col>
               <Col sm={3}>
@@ -183,6 +201,7 @@ function Importer() {
                   variant="success btn-block"
                   type="submit"
                   value="submit"
+                  disabled={submitted}
                 >
                   {onEdit ? "Update" : "Submit"}
                 </Button>
@@ -221,7 +240,7 @@ function Importer() {
                       //   data.isDeleted ? { backgroundColor: "lightGray" } : {}
                       // }
                       >
-                        <td>{key}</td>
+                        <td>{key + 1}</td>
                         <td>{data.importerName}</td>
                         <td>{data.entity}</td>
                         {data.isDeleted === false ? (

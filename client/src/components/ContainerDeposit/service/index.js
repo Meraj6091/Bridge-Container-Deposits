@@ -10,7 +10,6 @@ export const getContainerDeposits = (data) => {
 };
 
 export const updateContainerDeposits = (data) => {
-  debugger;
   let postData = data;
   if (data._id) {
     postData.uuid = data._id;

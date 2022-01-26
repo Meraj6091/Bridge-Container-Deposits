@@ -49,7 +49,11 @@ const ContainerDeposits = () => {
   const [onDelete, setOnDelete] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [validated, setValidated] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
   const currentUser = localStorage.getItem("currentLoggedInUser");
+
   useEffect(() => {
     getData();
     loadEntities();
@@ -85,10 +89,25 @@ const ContainerDeposits = () => {
     });
   };
 
+  let max =
+    parseInt(containerData.depositedAmount) +
+    parseInt(containerData.refundAmount);
+
   const handleSubmit = async (event) => {
+    setSubmitted(true);
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+      setValidated(true);
+      setSubmitted(false);
+      return;
+    }
     event.preventDefault();
 
     let postData = containerData;
+    let unRecoveredAmount;
+
     try {
       if (onEdit) {
         const date = new Date();
@@ -99,13 +118,23 @@ const ContainerDeposits = () => {
           containerData.refundAmount &&
           containerData.deductAmount
         ) {
-          let unRecoveredAmount =
+          unRecoveredAmount =
             parseInt(containerData.depositedAmount) +
             parseInt(containerData.refundAmount) -
             parseInt(containerData.deductAmount);
+
           postData.unRecoveredAmount = unRecoveredAmount;
+
           console.log(unRecoveredAmount);
         }
+
+        // if (
+        //   containerData.deductAmount &&
+        //   containerData.unRecoveredAmount &&
+        //   parseInt(containerData.deductAmount) > max
+        // )
+        // openToast("warn", "Check The Deduct Amount Again");
+
         await updateContainerDeposits(postData);
       } else {
         postData.createdBy = currentUser;
@@ -125,6 +154,9 @@ const ContainerDeposits = () => {
         "success",
         onEdit ? "Updated Successfully" : "Created Successfully"
       );
+
+      setValidated(false);
+      setSubmitted(false);
     } catch (e) {
       console.log(e);
     }
@@ -212,7 +244,10 @@ const ContainerDeposits = () => {
 
   const exportToCSV = () => {
     console.log(tableData.data);
-    const newArrayOfObj = tableData.data.map(
+    let filteredArr = tableData.data?.filter(function (el) {
+      return el.isDeleted === false;
+    });
+    const newArrayOfObj = filteredArr.map(
       ({
         billOfLandingNo: BillofLandingNumber,
         blType: BLType,
@@ -282,7 +317,12 @@ const ContainerDeposits = () => {
         <br></br>
         <Card>
           <Card.Body>
-            <Form onSubmit={handleSubmit}>
+            <Form
+              noValidate
+              validated={validated}
+              onSubmit={handleSubmit}
+              autoComplete="off"
+            >
               <Row>
                 <Form.Group as={Col} md="4">
                   <Form.Label>Entity</Form.Label>
@@ -484,12 +524,151 @@ const ContainerDeposits = () => {
                   <>
                     <Card>
                       <Card.Body>
-                        <ContainerDepositsRecovery
-                          depositedAmount={containerData.depositedAmount}
+                        {/* <ContainerDepositsRecovery
                           value={containerData.currency}
                           containerData={containerData}
                           setContainerData={setContainerData}
-                        />
+                        /> */}
+                        <div className="exfullwidth">
+                          <span>
+                            <b>Recovery Details</b>
+                          </span>
+                          <br></br>
+                          <br></br>
+
+                          <Form.Row>
+                            <Form.Group as={Col} md="4" controlId="chequeNo">
+                              <Form.Label>Cheque No</Form.Label>
+                              <Form.Control
+                                required
+                                type="number"
+                                placeholder="Cheque No"
+                                onChange={handleChange}
+                                value={containerData.chequeNo}
+                              />
+                            </Form.Group>
+                            <Form.Group
+                              as={Col}
+                              md="4"
+                              controlId="receivedDate"
+                            >
+                              <Form.Label>Received date</Form.Label>
+                              <Form.Control
+                                required
+                                type="date"
+                                placeholder="Received date"
+                                onChange={handleChange}
+                                value={containerData.receivedDate}
+                              />
+                            </Form.Group>
+
+                            {/* Recovered Amount */}
+                            <Form.Group
+                              as={Col}
+                              md="4"
+                              controlId="refundAmount"
+                            >
+                              <Form.Label>Refund Amount</Form.Label>
+                              <InputGroup className="mb-3">
+                                <InputGroup.Prepend>
+                                  <InputGroup.Text id="basic-addon1">
+                                    {containerData.currency}
+                                  </InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <Form.Control
+                                  //
+                                  required
+                                  placeholder="Refund Amount"
+                                  type="number"
+                                  pattern="^(\d+\.\d{1,6})$"
+                                  onChange={handleChange}
+                                  value={containerData.refundAmount}
+                                  // defaultValue={getUnitPriceValue(props.data.recoveredAmount)}
+                                  // onChange={calculateUnrecoveredAmount}
+                                />
+                              </InputGroup>
+                            </Form.Group>
+                            {/*  */}
+
+                            {/* Exempted Tax Amount */}
+                            <Form.Group
+                              as={Col}
+                              md="4"
+                              controlId="deductAmount"
+                            >
+                              <Form.Label>Deduct Amount</Form.Label>
+                              <InputGroup className="mb-3">
+                                <InputGroup.Prepend>
+                                  <InputGroup.Text id="basic-addon1">
+                                    {containerData.currency}
+                                  </InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <Form.Control
+                                  //
+                                  required
+                                  placeholder="Deduct Amount"
+                                  type="number"
+                                  pattern="^(\d+\.\d{1,6})$"
+                                  max={max}
+                                  onChange={handleChange}
+                                  value={containerData.deductAmount}
+                                  // defaultValue={getUnitPriceValue(props.data.exceptedTaxAmount)}
+                                  // onChange={props.onChange}
+                                />
+                              </InputGroup>
+                            </Form.Group>
+                            {/*  */}
+
+                            <Form.Group as={Col} md="4" controlId="reason">
+                              <Form.Label>Reason</Form.Label>
+                              <Form.Control
+                                required
+                                type="text"
+                                placeholder="Reason"
+                                onChange={handleChange}
+                                value={containerData.reason}
+                              />
+                            </Form.Group>
+
+                            <Form.Group as={Col} md="4" controlId="settleDate">
+                              <Form.Label>Settled date</Form.Label>
+                              <Form.Control
+                                required
+                                type="date"
+                                placeholder="Settled date"
+                                onChange={handleChange}
+                                value={containerData.settleDate}
+                              />
+                            </Form.Group>
+
+                            {/* Un-Recovered Amount */}
+                            <Form.Group
+                              as={Col}
+                              md="4"
+                              controlId="unRecoveredAmount"
+                            >
+                              <Form.Label>Un-Recovered Amount</Form.Label>
+                              <InputGroup className="mb-3">
+                                <InputGroup.Prepend>
+                                  <InputGroup.Text id="basic-addon1">
+                                    {containerData.currency}
+                                  </InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <Form.Control
+                                  //
+                                  disabled
+                                  required
+                                  placeholder="Un-Recovered Amount"
+                                  type="number"
+                                  pattern="^(\d+\.\d{1,6})$"
+                                  onChange={handleChange}
+                                  value={containerData.unRecoveredAmount}
+                                  // onChange={props.onChange}
+                                />
+                              </InputGroup>
+                            </Form.Group>
+                          </Form.Row>
+                        </div>
                       </Card.Body>
                     </Card>
                   </>
@@ -501,6 +680,7 @@ const ContainerDeposits = () => {
                   variant="success btn-block"
                   type="submit"
                   value="submit"
+                  disabled={submitted}
                 >
                   {onEdit ? "Update" : "Submit"}
                 </Button>
@@ -587,7 +767,7 @@ const ContainerDeposits = () => {
                 {tableData.data &&
                   tableData.data.map((data, key) => (
                     <tr>
-                      <td>{key}</td>
+                      <td>{key + 1}</td>
                       <td>{data.entity}</td>
                       {/* <td>{data.department}</td> */}
                       <td>{data.blType}</td>

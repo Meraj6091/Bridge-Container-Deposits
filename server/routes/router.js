@@ -143,7 +143,7 @@ router.post("/containerDeposits", (request, response) => {
 router.get("/getContainerDeposits", async (request, response) => {
   const getContainerDeposits = await containerDepositsModel
     .find({})
-    .sort({ createdDate: -1 });
+    .sort({ createdDate: -1 }); //getting the latest updated one
   try {
     if (getContainerDeposits) {
       return response.json(getContainerDeposits);

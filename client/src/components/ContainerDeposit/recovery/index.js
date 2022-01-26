@@ -17,24 +17,16 @@ const ContainerDepositsRecovery = ({
   value,
   containerData,
   setContainerData,
-  depositedAmount,
 }) => {
-  const [filterContainerData, setFilterContainerData] = useState({});
-  const [onEdit, setonEdit] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [tableData, setTableData] = useState({});
-
-  const [showModal, setShowModal] = useState(false);
-  const [onDelete, setOnDelete] = useState(false);
-  const [searchValue, setSearchValue] = useState("");
-  const [filteredProducts, setFilteredProducts] = useState([]);
-
   const handleChange = (event) => {
     setContainerData({
       ...containerData,
       [event.target.id]: event.target.value,
     });
   };
+  let max =
+    parseInt(containerData.depositedAmount) +
+    parseInt(containerData.refundAmount);
 
   return (
     <>
@@ -44,7 +36,7 @@ const ContainerDepositsRecovery = ({
         </span>
         <br></br>
         <br></br>
-        <Form>
+        <Form noValidate autoComplete="off">
           <Form.Row>
             <Form.Group as={Col} md="4" controlId="chequeNo">
               <Form.Label>Cheque No</Form.Label>
@@ -102,6 +94,7 @@ const ContainerDepositsRecovery = ({
                   placeholder="Deduct Amount"
                   type="number"
                   pattern="^(\d+\.\d{1,6})$"
+                  max={5}
                   onChange={handleChange}
                   value={containerData.deductAmount}
                   // defaultValue={getUnitPriceValue(props.data.exceptedTaxAmount)}

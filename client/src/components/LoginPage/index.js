@@ -22,6 +22,7 @@ const LoginPage = () => {
     });
   };
   const handleSubmit = async (event) => {
+    setLoggedIn(true);
     event.preventDefault();
 
     const { data } = await login(loginData);
@@ -38,7 +39,7 @@ const LoginPage = () => {
       }
       localStorage.setItem("currentLoggedInUser", data.firstName);
       localStorage.setItem("currentLoggedInUserPassword", data.password);
-      setLoggedIn(true);
+      setLoggedIn(false);
       history.push("/containerDeposits");
     } else if (data.unMatch === true) {
       openToast("error", "Logging Details Are Wrong!");
@@ -85,8 +86,13 @@ const LoginPage = () => {
                 />
               </Form.Group>
 
-              <Button variant="success btn-block" type="submit" value="submit">
-                Login
+              <Button
+                variant="success btn-block"
+                type="submit"
+                value="submit"
+                disabled={loggedIn}
+              >
+                {loggedIn ? "Login..." : "Login"}
               </Button>
               <br />
 
