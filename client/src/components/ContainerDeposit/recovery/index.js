@@ -50,7 +50,7 @@ const ContainerDepositsRecovery = ({
               <Form.Label>Cheque No</Form.Label>
               <Form.Control
                 required
-                type="text"
+                type="number"
                 placeholder="Cheque No"
                 onChange={handleChange}
                 value={containerData.chequeNo}

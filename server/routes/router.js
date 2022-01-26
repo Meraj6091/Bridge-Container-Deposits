@@ -186,7 +186,9 @@ router.put("/deleteContainerDeposits", async (request, response) => {
 //entities
 
 router.get("/getEntities", async (request, response) => {
-  const getEntities = await importerTemplate.find({});
+  const getEntities = await importerTemplate
+    .find({})
+    .where({ isDeleted: false });
   try {
     if (getEntities) {
       console.log(getEntities);

@@ -99,7 +99,6 @@ const ContainerDeposits = () => {
         containerData.refundAmount &&
         containerData.deductAmount
       ) {
-        debugger;
         let unRecoveredAmount =
           parseInt(containerData.depositedAmount) +
           parseInt(containerData.refundAmount) -
@@ -184,7 +183,6 @@ const ContainerDeposits = () => {
 
   const getData = async () => {
     const { data } = await getContainerDeposits(containerData);
-
     if (data) {
       setTableData({
         ...tableData,
