@@ -37,6 +37,7 @@ import { exportToExcel } from "../../Helpers/exportToExcel";
 import { openToast } from "../../Helpers/openToast";
 import { ToastContainer } from "react-toastify";
 import { FcDeleteDatabase } from "react-icons/fc";
+import { async } from "exceljs/dist/exceljs";
 
 const ContainerDeposits = () => {
   const [containerData, setContainerData] = useState({});
@@ -162,9 +163,17 @@ const ContainerDeposits = () => {
     }
   };
 
-  const handleOnEdit = (data) => {
+  const handleOnEdit = async (data) => {
+    await setContainerData({
+      chequeNo: "",
+      receivedDate: "",
+      refundAmount: "",
+      deductAmount: "",
+      reason: "",
+      settleDate: "",
+      unRecoveredAmount: "",
+    });
     setContainerData({
-      ...containerData,
       ...data,
     });
     setonEdit(true);
